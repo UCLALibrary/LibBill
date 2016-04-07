@@ -1,0 +1,52 @@
+<?xml version = '1.0' encoding = 'windows-1252'?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
+  <filter>
+    <filter-name>AuthenticationFilter</filter-name>
+    <filter-class>edu.ucla.library.libservices.invoicing.security.filters.AuthenticationServlet</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AuthenticationFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <servlet-name>Jersey Web Application</servlet-name>
+    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    <init-param> 
+      <param-name>com.sun.ws.rest.config.property.resourceConfigClass</param-name> 
+      <param-value>com.sun.ws.rest.api.core.PackagesResourceConfig</param-value> 
+    </init-param> 
+    <init-param>
+      <param-name>com.sun.jersey.config.property.packages</param-name>
+      <param-value>edu.ucla.library.libservices.invoicing.webservices</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Jersey Web Application</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+  <context-param>
+    <param-name>datasource.oracle</param-name>
+    <param-value>java:/rssDS</param-value>
+  </context-param>
+  <context-param>
+    <param-name>datasource.invoice</param-name>
+    <param-value>java:/billDS</param-value>
+    <!--param-value>java:/devBillDS</param-value-->
+    <!--param-value>java:/testBillDS</param-value-->
+  </context-param>
+  <context-param>
+    <param-name>mail.filebase</param-name>
+    <param-value>C:\Temp\pdf\</param-value>
+  </context-param>
+  <context-param>
+    <param-name>mail.propsfile</param-name>
+    <param-value>C:\Temp\pdf\mail.props</param-value>
+  </context-param>
+  <context-param>
+    <param-name>user.logging.cashnet</param-name>
+    <param-value>ecommerce</param-value>
+  </context-param>
+</web-app>
