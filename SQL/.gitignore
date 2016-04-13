@@ -1,0 +1,7 @@
+# Exclude files with sensitive info; some of it may be
+# obsolete but be conservative until this can be cleaned up.
+
+data/
+
+create_invoice_users.sql
+
