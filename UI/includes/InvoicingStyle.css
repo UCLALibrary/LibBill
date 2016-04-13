@@ -1,0 +1,106 @@
+  .GenericMessage  { 
+	font-family: arial;
+	font-size: 18px;
+	color: Black;
+        background-color: #eeeeee; 
+        text-decoration : none;
+  }
+  .ErrorMessage  { 
+	font-family: arial;
+	font-size: 18px;
+	color: Red;
+        background-color: #eeeeee; 
+        text-decoration : none;
+  }
+
+
+  body  { 
+	font-family: arial;
+	font-size: 12px;
+	color: Black;
+        background-color: #ffffff; 
+        text-decoration : none;
+  }
+
+
+  td { 
+    font-family: arial;
+	color: #black;
+	font-size: 12px;
+	}
+
+  .left  {
+        font-size: 12px;
+        color: #000000;
+        margin: 5pt;
+  }
+
+  H2     {
+        margin : 10pt
+
+  }
+
+  H3     {
+        margin : 10pt
+
+  }
+
+  H4     {
+        margin : 10pt
+
+  }
+
+  H5     {
+        margin : 10pt
+
+  }
+
+  p     {
+	font-family: arial;
+	font-size: 12px;
+        margin : 10pt
+
+  }
+
+
+
+  A:link  {
+  	text-decoration : none;
+  	color : #536895;
+  }
+  
+  
+  A:visited  {
+  	text-decoration : none;
+  	color : #536895;
+  }
+  A:active  {
+  	text-decoration : underline;
+  	font-weight : bold;
+  	color : #536895;
+  }
+  A:hover  {
+  	text-decoration : underline;
+  	background : #FFB300;
+  	color : #536895;
+  }
+
+  .standard1 { 
+        background=#cccccc; 
+  } 
+  .yourstyle {
+        font-variant: small-caps;
+        font-style: italic;
+        font-weight: bold;
+        color: blue;
+        font-size: large;
+        background-color: yellow;
+'        text-decoration: underline;
+        margin: 4pt;
+        padding: 6pt;
+        border: 2pt;
+        border-style: dotted;
+        border-color: gray;
+  }
+
+

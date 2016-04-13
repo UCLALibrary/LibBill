@@ -1,0 +1,50 @@
+Loggin in:
+*You need an account in the Invoicing system to use this application.  If you have an account, please report the problem to helpdesk@library.ucla.edu.  If you do not have an account but need one, please contact your supervisor, or Library Business Services.
+*No results for that UID number...
+
+Searching for Patron record:
+*No results for that Library Card number......
+*more than one match on barcode...
+*No results for that string...
+*Name Search string must be 3 or more characters with no blank spaces...
+
+Searching for Invoice:
+*Invoice Numbers must be 8 characters long...
+*Amount must be a number...
+*The note string was empty...
+*The date string was empty...
+*No matching invoices on file...
+*Not a valid date
+
+Delete line item
+*404-problem with line number or invoice number; delete process halted
+*406-invoice not pending; delete process halted
+
+Invoices by patron
+*No invoices on file...
+
+Adding Payment:
+*Action failed: Amount must be a positive number
+*Action failed: Balance due is already zero
+*Warning: Overpayment
+*Warning: error updating status
+
+Adjusting Invoice
+*Action failed.  Refund or tax removal requires payment approver rights
+*Action failed.  Refund or tax removal can only be applied once
+
+Adding line item:
+*A price is required to add that line item...
+*Price must be a positive number...
+*Quantity must be a positive number...
+
+Editing Line Item:
+*Action Failed: Unit count must be a number
+*Action Failed: Quantity must not be blank
+
+Adding line item adjustment
+*The reason must be under 200 characters. Click your browser's back button to see your text.
+*The reason can't be blank.
+*Amount must be a number...
+*Adjustment amount must be a negative number.
+*Action Failed: Quantity must not be zero

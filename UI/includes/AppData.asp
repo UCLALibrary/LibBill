@@ -1,0 +1,5 @@
+<%
+VAuserName="voy_auth"
+VAIDKey="5535A0BC14"
+VACryptoKey="D55CDF30293C5EDCBD9A"
+%>
