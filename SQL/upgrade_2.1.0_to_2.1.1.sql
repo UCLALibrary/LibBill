@@ -1,3 +1,28 @@
+/***********************************************************  
+* Change script to upgrade LibBill database from 2.1.0 to 2.1.1
+* Modifies tax rate calculation to limit to California addresses.
+***********************************************************/
+
+-- If a problem occurs, roll back what we can and exit the script
+whenever sqlerror exit rollback;
+
+/***********************************************************  
+* Check current version and exit if not right.
+***********************************************************/
+declare
+  required_version application_setting.setting_value%type := '2.1.0';
+begin
+  if get_application_setting('version') != required_version then
+    raise_application_error(application_errors.INVALID_VERSION, 'Not at required version ' || required_version);
+  end if;
+end;
+/
+
+/***********************************************************  
+*
+* WS-919: Modify tax rate calculation to limit to California addresses.
+*
+***********************************************************/
 create or replace function get_tax_rate_id (
   p_patron_id in invoice.patron_id%type
 , p_patron_on_premises in invoice.patron_on_premises%type
@@ -47,20 +72,28 @@ exception
 end get_tax_rate_id;
 /
 
-/*
-with d as (
-  select 6201 as patron_id, 'Y' as on_premises, sysdate as inv_date from dual -- la_county rate
-  union all
-  select 6201, 'N', sysdate from dual -- invalid zip, no tax rate
-  union all
-  select 6201, 'Y', to_date('2010-01-01', 'YYYY-MM-DD') from dual -- la county rate, older rate
-  union all
-  select 152875, 'N', sysdate from dual -- california rate
-  union all
-  select 228885, 'N', sysdate from dual -- santa monica city rate
-)
-select d.*, tr.*
-from d
-left outer join tax_rate tr on get_tax_rate_id(patron_id, on_premises, inv_date) = tr.rate_id
+/***********************************************************  
+* Update version setting
+***********************************************************/
+update application_setting 
+  set setting_value = '2.1.1'
+  where setting_name = 'version'
 ;
-*/
+commit;
+
+/***********************************************************  
+* Recompile schema and report on errors & invalid objects
+***********************************************************/
+begin 
+  dbms_utility.compile_schema(
+    schema        => user,
+    compile_all   => TRUE,
+    reuse_settings => TRUE
+  );
+end;
+/
+
+select * from user_errors;
+select * from user_objects where status != 'VALID';
+
+/***** END *****/
