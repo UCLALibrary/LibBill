@@ -93,6 +93,7 @@ if not session("userName")="" then 'USER IS LOGGED IN...
   strEndYear=right(strEnddate,4)
 
   %>
+  <p>Note: endDate means the tax rate ends when that day starts</p>
 
   <p>
   <form name="UpdatetaxRate" method="post" autocomplete="off" action="showtaxRate.asp?action=UpdateTaxRate">
@@ -155,10 +156,10 @@ if not session("userName")="" then 'USER IS LOGGED IN...
 
   <select name="txtStartYear">
   <option selected value="<%=strStartYear%>"><%=strStartYear%></option>
-  <option value="2012">2012</option>
-  <option value="2013">2013</option>
-  <option value="2014">2014</option>
-  <option value="2015">2015</option>
+  <option value="2016">2016</option>
+  <option value="2017">2017</option>
+  <option value="2018">2018</option>
+  <option value="2019">2019</option>
   </select>
 
   </td>
@@ -201,10 +202,10 @@ if not session("userName")="" then 'USER IS LOGGED IN...
 
   <select name="txtEndYear">
   <option selected value="<%=strEndYear%>"><%=strEndYear%></option>
-  <option value="2012">2012</option>
-  <option value="2013">2013</option>
-  <option value="2014">2014</option>
-  <option value="2015">2015</option>
+  <option value="2016">2016</option>
+  <option value="2017">2017</option>
+  <option value="2018">2018</option>
+  <option value="2019">2019</option>
   </select>
 
   </td>

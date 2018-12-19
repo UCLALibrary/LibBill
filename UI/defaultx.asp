@@ -15,6 +15,25 @@ session("strBaseHash")="/invoicing/"
 'or show main menu (aready have userUID and name; authenticated and logged in)
 
 
+%>
+<p>
+<%
+strUserIP=Request.ServerVariables("REMOTE_ADDR")
+if strUserIP="164.67.17.238" then 
+
+  response.write "ALL: " & Request.ServerVariables("ALL_HTTP")
+
+end if
+
+%>
+</p>
+<%
+
+
+
+
+
+
 if session("UserUID")="" then
   session("UserUID") = Request.ServerVariables("HTTP_SHIBUCLAUNIVERSITYID")
 end if

@@ -6,3 +6,9 @@ Either you have not logged in, or your session has been timed out.
 Please log in to access this content...
 
 </p>
+<p>
+<form action="default.asp">
+Enter UID, and click Go
+<input type="text" name="txtUID">
+<input type="submit" value="Go">
+</form>

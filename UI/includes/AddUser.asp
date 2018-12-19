@@ -1,9 +1,13 @@
 <%
 
 strUID=left(request("txtUID"),9)
+strUID=trim(strUID)
 strUserName=left(request("txtUserName"),20)
+strUserName=trim(strUserName)
 strFirstName=left(request("txtFirstName"),20)
+strFirstName=trim(strFirstName)
 strLastName=left(request("txtLastName"),20)
+strLastName=trim(strLastName)
 strRole=request("txtRole")
 strWhoBy=session("UserName")
 strGo="Yes"

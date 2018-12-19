@@ -119,32 +119,38 @@ else
 
     select case left(strInvoiceNum,2)
       case "SC"
-        strUnitEmailAddress="selliott@library.ucla.edu"
-        strUnitEmailCC="wongbat@library.ucla.edu;speccoll-duplication@library.ucla.edu;jgaribay805@library.ucla.edu"
+        strUnitEmailAddress="speccoll-duplication@library.ucla.edu"
+        strUnitEmailCC="lbs-billing@library.ucla.edu"
       case "PA"
         strUnitEmailAddress="jgraham@library.ucla.edu"
-        strUnitEmailCC="selliott@library.ucla.edu;speccoll-duplication@library.ucla.edu;jgaribay805@library.ucla.edu"
+        strUnitEmailCC="speccoll-duplication@library.ucla.edu;lbs-billing@library.ucla.edu"
       case "UA"
-        strUnitEmailAddress="cbbrown@library.ucla.edu@library.ucla.edu"
-        strUnitEmailCC="selliott@library.ucla.edu;speccoll-duplication@library.ucla.edu;jgaribay805@library.ucla.edu"
+        strUnitEmailAddress="hbriston@library.ucla.edu"
+        strUnitEmailCC="speccoll-duplication@library.ucla.edu;lbs-billing@library.ucla.edu"
       case "BC"
         strUnitEmailAddress="tgj@library.ucla.edu"
-        strUnitEmailCC="selliott@library.ucla.edu;speccoll-duplication@library.ucla.edu;jgaribay805@library.ucla.edu"
+        strUnitEmailCC="speccoll-duplication@library.ucla.edu;lbs-billing@library.ucla.edu"
       case "OH"
-        strUnitEmailAddress="astevens@library.ucla.edu"
-        strUnitEmailCC="selliott@library.ucla.edu;speccoll-duplication@library.ucla.edu;jgaribay805@library.ucla.edu;jgaribay805@library.ucla.edu"
+        strUnitEmailAddress="speccoll-duplication@library.ucla.edu"
+        strUnitEmailCC="lbs-billing@library.ucla.edu"
       case "SR"
         strUnitEmailAddress="cbar@library.ucla.edu"
-        'strUnitEmailCC="wongbat@library.ucla.edu; selliott@library.ucla.edu;speccoll-duplication@library.ucla.edu;jgaribay805@library.ucla.edu"
+        strUnitEmailCC="lbs-billing@library.ucla.edu"
       case "LI"
-        strUnitEmailAddress="cnishiji@library.ucla.edu"
-        'strUnitEmailCC="wongbat@library.ucla.edu; selliott@library.ucla.edu;speccoll-duplication@library.ucla.edu;jgaribay805@library.ucla.edu"
+        strUnitEmailAddress="ariggio@library.ucla.edu"
+        strUnitEmailCC="lbs-billing@library.ucla.edu"
+      case "AS"
+        strUnitEmailAddress="erodriguez@library.ucla.edu"
+        strUnitEmailCC="lbs-billing@library.ucla.edu"
+      case "CS"
+        strUnitEmailAddress="erodriguez@library.ucla.edu"
+        strUnitEmailCC="lbs-billing@library.ucla.edu"
       case "MP"
         strUnitEmailAddress="majankowska@library.ucla.edu"
-        'strUnitEmailCC="wongbat@library.ucla.edu; selliott@library.ucla.edu;speccoll-duplication@library.ucla.edu;jgaribay805@library.ucla.edu"
+        strUnitEmailCC="lbs-billing@library.ucla.edu"
       case else
-        strUnitEmailAddress="selliott@library.ucla.edu"
-        strUnitEmailCC="wongbat@library.ucla.edu;speccoll-duplication@library.ucla.edu;jgaribay805@library.ucla.edu"
+        strUnitEmailAddress="speccoll-duplication@library.ucla.edu"
+        strUnitEmailCC="lbs-billing@library.ucla.edu"
     end select
 
     strUnitEmailSubject="PAID: " & strInvoiceNum
@@ -167,7 +173,7 @@ else
 
 
 
-<form method="post" action="GetInvoice.asp?Search=InvoiceNum&Action=MailPDF">
+<form method="post" action="GetInvoice.asp?Search=InvoiceNum&Action=MailPDF&Num=<%=strInvoiceNum%>">
 
 <input align="right" type="hidden" name="txtInvoiceNum" value="<%=strInvoiceNum%>" />
 <input type="submit" value="Mail PDF" />

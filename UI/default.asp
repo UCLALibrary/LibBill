@@ -15,6 +15,9 @@ session("strBaseHash")="/invoicing/"
 'or show main menu (aready have userUID and name; authenticated and logged in)
 
 
+
+
+
 if session("UserUID")="" then
   session("UserUID") = Request.ServerVariables("HTTP_SHIBUCLAUNIVERSITYID")
 end if

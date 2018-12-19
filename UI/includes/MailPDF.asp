@@ -15,6 +15,8 @@ strSig=strIDKey & ":" & strHash
 postURL=session("strBaseURL")
 postURL=postURL & "invoices/mail_invoice/" & strInvoiceNum
 
+'response.write "PostURL=" & postURL
+
 Set xmlhttp = server.Createobject("MSXML2.XMLHTTP")
 xmlhttp.Open "GET", postUrl, false
 'xmlhttp.setRequestHeader "Content-type", "application/x-msdownload"
