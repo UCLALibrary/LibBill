@@ -15,7 +15,7 @@ if len(trim(strEndDay))=1 then strEndDay="0" & strEndDay
 
 select case strStartMonth
   case "02"
-    if strStartYear="2012" or strStartYear="2016" or strStartYear="2020" then
+    if strStartYear="2012" or strStartYear="2016" or strStartYear="2020" or strStartYear="2024" then
       if strStartDay="30" or strStartDay="31" then strStartDay="29"
     else
       if strStartDay="29" or strStartDay="30" or strStartDay="31" then strStartDay="28"
@@ -33,7 +33,7 @@ strStartDate=strStartMonth & "/" & strStartDay & "/" & strStartYear
 
 select case strEndMonth
   case "02"
-    if strEndYear="2012" or strEndYear="2016" or strEndYear="2020" then
+    if strEndYear="2012" or strEndYear="2016" or strEndYear="2020" or strStartYear="2024" then
       if strEndDay="30" or strEndDay="31" then strEndDay="29"
     else
       if strEndDay="29" or strEndDay="30" or strEndDay="31" then strEndDay="28"
