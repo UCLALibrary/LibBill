@@ -1,16 +1,16 @@
-/***********************************************************  
-* Change script to upgrade LibBill database from 2.1.0 to 2.1.1
+/***********************************************************
+* Change script to upgrade LibBill database from 2.0.7 to 2.0.8
 * Modifies tax rate calculation to limit to California addresses.
 ***********************************************************/
 
 -- If a problem occurs, roll back what we can and exit the script
 whenever sqlerror exit rollback;
 
-/***********************************************************  
+/***********************************************************
 * Check current version and exit if not right.
 ***********************************************************/
 declare
-  required_version application_setting.setting_value%type := '2.1.0';
+  required_version application_setting.setting_value%type := '2.0.7';
 begin
   if get_application_setting('version') != required_version then
     raise_application_error(application_errors.INVALID_VERSION, 'Not at required version ' || required_version);
@@ -18,7 +18,7 @@ begin
 end;
 /
 
-/***********************************************************  
+/***********************************************************
 *
 * WS-919: Modify tax rate calculation to limit to California addresses.
 *
@@ -49,11 +49,11 @@ begin
   end if;
 
   -- Get the tax rate associated with the zip code
-  select tax_rate_name 
+  select tax_rate_name
     into v_tax_rate_name
     from taxable_zip_code
     where zip_code = v_patron_zip_code;
-    
+
   -- Get the tax rate id for this rate, effective as of this invoice date
   select rate_id
     into v_tax_rate_id
@@ -61,30 +61,30 @@ begin
     where rate_name = v_tax_rate_name
     and start_date <= p_invoice_date
     and (end_date >= p_invoice_date or end_date is null);
-  
+
   return v_tax_rate_id;
-  
+
 -- if select ... into found no rows this "silent" exception is thrown, so return default of null (no rate) here
 exception
   when no_data_found then
     return v_tax_rate_id;
-  
+
 end get_tax_rate_id;
 /
 
-/***********************************************************  
+/***********************************************************
 * Update version setting
 ***********************************************************/
-update application_setting 
-  set setting_value = '2.1.1'
+update application_setting
+  set setting_value = '2.0.8'
   where setting_name = 'version'
 ;
 commit;
 
-/***********************************************************  
+/***********************************************************
 * Recompile schema and report on errors & invalid objects
 ***********************************************************/
-begin 
+begin
   dbms_utility.compile_schema(
     schema        => user,
     compile_all   => TRUE,
