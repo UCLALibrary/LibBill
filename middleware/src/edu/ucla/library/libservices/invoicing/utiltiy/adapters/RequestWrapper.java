@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -42,6 +43,26 @@ public class RequestWrapper
         throws IOException
       {
         return in.read();
+      }
+
+      @Override
+      public boolean isFinished()
+      {
+        // TODO Implement this method
+        return false;
+      }
+
+      @Override
+      public boolean isReady()
+      {
+        // TODO Implement this method
+        return false;
+      }
+
+      @Override
+      public void setReadListener(ReadListener readListener)
+      {
+        // TODO Implement this method
       }
     };
   }

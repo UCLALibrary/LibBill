@@ -3,8 +3,11 @@ package edu.ucla.library.libservices.invoicing.webservices.patrons.generator;
 import edu.ucla.library.libservices.invoicing.utiltiy.db.DataSourceFactory;
 import edu.ucla.library.libservices.invoicing.utiltiy.testing.ContentTests;
 import edu.ucla.library.libservices.invoicing.webservices.invoices.db.mappers.SimpleHeaderMapper;
+import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.AlmaPatron;
 import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.PatronBean;
 import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.SimplePatron;
+import edu.ucla.library.libservices.invoicing.webservices.patrons.clients.PatronClient;
+import edu.ucla.library.libservices.invoicing.webservices.patrons.converters.AlmaVgerConverter;
 import edu.ucla.library.libservices.invoicing.webservices.patrons.db.mappers.PatronMapper;
 import edu.ucla.library.libservices.invoicing.webservices.patrons.db.mappers.SimplePatronMapper;
 
@@ -32,6 +35,8 @@ public class PatronGenerator
   private String dbVger;
   private String dbBill;
   private int patronID;
+  private String almaKey;
+  private String almaURI;
   @XmlElement( name = "patron" )
   private List<PatronBean> patrons;
   private PatronBean thePatronByID;
@@ -243,6 +248,22 @@ public class PatronGenerator
     return basicPatron;
   }
 
+  public PatronBean getPatronFromAlma()
+  {
+    AlmaPatron thePatron;
+    PatronBean theVger;
+    PatronClient client;
+
+    client = new PatronClient();
+    client.setKey(getAlmaKey());
+    client.setUriBase(getAlmaURI());
+    client.setUserID(getBarcode());
+
+    thePatron = client.getThePatron();
+    theVger = AlmaVgerConverter.convertPatron(thePatron);
+    return theVger;
+  }
+
   public void setInstitutionID( String institutionID )
   {
     this.institutionID = institutionID;
@@ -276,5 +297,25 @@ public class PatronGenerator
   public String getDbBill()
   {
     return dbBill;
+  }
+
+  public void setAlmaKey(String almaKey)
+  {
+    this.almaKey = almaKey;
+  }
+
+  public String getAlmaKey()
+  {
+    return almaKey;
+  }
+
+  public void setAlmaURI(String almaURI)
+  {
+    this.almaURI = almaURI;
+  }
+
+  public String getAlmaURI()
+  {
+    return almaURI;
   }
 }

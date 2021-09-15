@@ -75,6 +75,8 @@ public class PatronBean
   private Date tempExpireDate;
   @XmlElement( name = "phoneNumber" )
   private String phoneNumber;
+  @XmlElement( name = "primaryID" )
+  private String primaryID;
 
   public PatronBean()
   {
@@ -405,5 +407,15 @@ public class PatronBean
   public String getPhoneNumber()
   {
     return phoneNumber;
+  }
+
+  public void setPrimaryID(String primaryID)
+  {
+    this.primaryID = primaryID;
+  }
+
+  public String getPrimaryID()
+  {
+    return primaryID;
   }
 }

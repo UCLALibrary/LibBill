@@ -27,6 +27,8 @@ public class InvoiceHeaderBean
   private String createdBy;
   @XmlElement( name = "patronID" )
   private int patronID;
+  @XmlElement( name = "patronPrimaryID" )
+  private String patronPrimaryID;
   @XmlElement( name = "balanceDue" )
   private double balanceDue;
   @XmlElement( name = "onPremises" )
@@ -213,41 +215,14 @@ public class InvoiceHeaderBean
   {
     return totalTax;
   }
+
+  public void setPatronPrimaryID(String patronPrimaryID)
+  {
+    this.patronPrimaryID = patronPrimaryID;
+  }
+
+  public String getPatronPrimaryID()
+  {
+    return patronPrimaryID;
+  }
 }
-  /*@XmlElement( name = "cityTax", required = false )
-  private double cityTax;
-  @XmlElement( name = "countyTax", required = false )
-  private double countyTax;
-  @XmlElement( name = "stateTax", required = false )
-  private double stateTax;
-
-  public void setCityTax( double cityTax )
-  {
-    this.cityTax = cityTax;
-  }
-
-  public double getCityTax()
-  {
-    return cityTax;
-  }
-
-  public void setCountyTax( double countyTax )
-  {
-    this.countyTax = countyTax;
-  }
-
-  public double getCountyTax()
-  {
-    return countyTax;
-  }
-
-  public void setStateTax( double stateTax )
-  {
-    this.stateTax = stateTax;
-  }
-
-  public double getStateTax()
-  {
-    return stateTax;
-  }
-*/

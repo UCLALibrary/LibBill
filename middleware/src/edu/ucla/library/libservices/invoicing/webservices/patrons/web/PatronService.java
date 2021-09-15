@@ -1,7 +1,10 @@
 package edu.ucla.library.libservices.invoicing.webservices.patrons.web;
 
 import edu.ucla.library.libservices.invoicing.utiltiy.testing.ContentTests;
+import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.AlmaPatron;
 import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.PatronBean;
+import edu.ucla.library.libservices.invoicing.webservices.patrons.clients.PatronClient;
+import edu.ucla.library.libservices.invoicing.webservices.patrons.converters.AlmaVgerConverter;
 import edu.ucla.library.libservices.invoicing.webservices.patrons.generator.PatronGenerator;
 
 import java.io.UnsupportedEncodingException;
@@ -46,6 +49,24 @@ public class PatronService
     docMaker.getPatronsByBarcode();
 
     return docMaker;
+  }
+
+
+  @GET
+  @Produces( "text/xml" )
+  @Path( "alma/{bc}" )
+  public Response fromAlma( @PathParam( "bc" )
+    String barcode )
+  {
+    PatronGenerator docMaker;
+
+    docMaker = new PatronGenerator();
+
+    docMaker.setBarcode( barcode );
+    //docMaker.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+    docMaker.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
+    docMaker.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
+    return Response.ok().entity( docMaker.getPatronFromAlma() ).build();
   }
 
   @GET

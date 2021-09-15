@@ -42,6 +42,9 @@ public class PdfInvoiceGenerator
   private PdfInvoice invoice;
   private String dbName;
   private String invoiceNumber;
+  private String almaKey;
+  private String almaURI;
+  private String patronPrimaryID;
 
   public PdfInvoiceGenerator()
   {
@@ -59,6 +62,7 @@ public class PdfInvoiceGenerator
     invoice = new PdfInvoice();
     invoice.setHeader( populateHeader() );
     invoice.setPatron( populatePatron( invoice.getHeader().getPatronID() ) );
+    //invoice.setPatron( populatePatron( invoice.getHeader().getPatronPrimaryID() ) );
     invoice.setPayments( populatePayments() );
     invoice.setInvoiceNotes( populateInvoiceNotes() );
     invoice.setInvoiceAdjustments( populateInvoiceAdjustments() );
@@ -88,8 +92,8 @@ public class PdfInvoiceGenerator
 
   private void makeConnection()
   {
-    ds = DataSourceFactory.createDataSource( getDbName() );
-    //ds = DataSourceFactory.createBillSource();
+    //ds = DataSourceFactory.createDataSource( getDbName() );
+    ds = DataSourceFactory.createBillSource();
   }
 
   private InvoiceHeaderBean populateHeader()
@@ -106,6 +110,18 @@ public class PdfInvoiceGenerator
     generator.setPatronID( patronID );
     generator.setDbName( getDbName() );
     return generator.getThePatronByID();
+  }
+
+  private PatronBean populatePatron( String barcode )
+  {
+    PatronGenerator generator;
+
+    generator = new PatronGenerator();
+
+    generator.setBarcode(barcode);
+    generator.setAlmaKey(getAlmaKey());
+    generator.setAlmaURI(getAlmaURI());
+    return generator.getPatronFromAlma();
   }
 
   private List<Payment> populatePayments()
@@ -136,5 +152,35 @@ public class PdfInvoiceGenerator
   {
     return new JdbcTemplate( ds ).query( GET_LINES, new Object[]
         { getInvoiceNumber().toLowerCase() }, new InvoiceEntryMapper() );
+  }
+
+  public void setAlmaKey(String almaKey)
+  {
+    this.almaKey = almaKey;
+  }
+
+  public String getAlmaKey()
+  {
+    return almaKey;
+  }
+
+  public void setAlmaURI(String almaURI)
+  {
+    this.almaURI = almaURI;
+  }
+
+  public String getAlmaURI()
+  {
+    return almaURI;
+  }
+
+  public void setPatronPrimaryID(String patronPrimaryID)
+  {
+    this.patronPrimaryID = patronPrimaryID;
+  }
+
+  public String getPatronPrimaryID()
+  {
+    return patronPrimaryID;
   }
 }

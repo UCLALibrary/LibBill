@@ -33,9 +33,9 @@ public class DataSourceFactory
 
     ds = new DriverManagerDataSource();
     ds.setDriverClassName( "oracle.jdbc.OracleDriver" );
-    ds.setUrl( "oracle_url" );
-    ds.setUsername( "billing_user" );
-    ds.setPassword( "pwd" );
+    ds.setUrl( "jdbc:oracle:thin:@ils-db-prod.library.ucla.edu:1521:VGER" );
+    ds.setUsername( "invoice_service" );
+    ds.setPassword( "invoice_service_pwd" );
 
     return ds;
   }

@@ -25,6 +25,8 @@ public class InsertHeaderBean
   private String createdBy;
   @XmlElement( name = "patronID" )
   private int patronID;
+  @XmlElement( name = "patronPrimaryID" )
+  private int patronPrimaryID;
   @XmlElement( name = "onPremises" )
   private String onPremises;
 
@@ -91,5 +93,15 @@ public class InsertHeaderBean
   public String getOnPremises()
   {
     return onPremises;
+  }
+
+  public void setPatronPrimaryID(int patronPrimaryID)
+  {
+    this.patronPrimaryID = patronPrimaryID;
+  }
+
+  public int getPatronPrimaryID()
+  {
+    return patronPrimaryID;
   }
 }

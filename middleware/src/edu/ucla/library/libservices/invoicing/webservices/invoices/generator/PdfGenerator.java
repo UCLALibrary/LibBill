@@ -88,6 +88,8 @@ public class PdfGenerator
   {
     if ( ContentTests.isLegitInvoice( getInvoiceNumber(), uid, getDbName() ) )
       this.populatePdf( document );
+    else
+      System.out.println("bad result from isLegitInvoice");
   }
 
   public void populatePdf( Document document )

@@ -32,6 +32,8 @@ public class SimplePatron
   private String institutionID;
   @XmlElement( name = "invoiceIDs" )
   private List<SimpleHeader> invoices;
+  @XmlElement( name = "primaryID" )
+  private String primaryID;
 
   public SimplePatron()
   {
@@ -127,5 +129,15 @@ public class SimplePatron
   public List<SimpleHeader> getInvoices()
   {
     return invoices;
+  }
+
+  public void setPrimaryID(String primaryID)
+  {
+    this.primaryID = primaryID;
+  }
+
+  public String getPrimaryID()
+  {
+    return primaryID;
   }
 }

@@ -1,147 +1,108 @@
 package edu.ucla.library.libservices.invoicing.utiltiy.testing;
 
+import com.itextpdf.text.Document;
+
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+
+import com.itextpdf.text.pdf.PdfWriter;
+
 import edu.ucla.library.libservices.invoicing.security.signatures.SignatureCreator;
+import edu.ucla.library.libservices.invoicing.webservices.invoices.generator.PdfGenerator;
 
-import edu.ucla.library.libservices.invoicing.utiltiy.db.DataSourceFactory;
-import edu.ucla.library.libservices.invoicing.utiltiy.strings.StringCleaner;
-import edu.ucla.library.libservices.invoicing.webservices.adjustments.beans.AdjustmentType;
-import edu.ucla.library.libservices.invoicing.webservices.adjustments.beans.InvoiceAdjustment;
-import edu.ucla.library.libservices.invoicing.webservices.adjustments.db.procs.AddInvoiceAdjustmentProcedure;
-import edu.ucla.library.libservices.invoicing.webservices.adjustments.generator.AdjustmentTypeGenerator;
-import edu.ucla.library.libservices.invoicing.webservices.invoices.beans.CashNetInvoice;
-import edu.ucla.library.libservices.invoicing.webservices.invoices.beans.CashNetLine;
-import edu.ucla.library.libservices.invoicing.webservices.invoices.beans.DisplayLineItem;
-import edu.ucla.library.libservices.invoicing.webservices.invoices.beans.LineItemBean;
-
-import edu.ucla.library.libservices.invoicing.webservices.invoices.beans.SimpleHeader;
-import edu.ucla.library.libservices.invoicing.webservices.invoices.db.mappers.DisplayLineItemMapper;
-import edu.ucla.library.libservices.invoicing.webservices.invoices.db.procs.AddLineItemProcedure;
-
-import edu.ucla.library.libservices.invoicing.webservices.invoices.db.procs.UpdateLineItemProcedure;
-
-import edu.ucla.library.libservices.invoicing.webservices.invoices.generator.InvoiceGenerator;
-import edu.ucla.library.libservices.invoicing.webservices.locations.beans.Location;
-import edu.ucla.library.libservices.invoicing.webservices.locations.beans.LocationServiceBean;
-import edu.ucla.library.libservices.invoicing.webservices.locations.db.procs.AddLocationProcedure;
-import edu.ucla.library.libservices.invoicing.webservices.locations.db.procs.AddLocationServiceProcedure;
-import edu.ucla.library.libservices.invoicing.webservices.locations.db.procs.EditLocationProcedure;
-import edu.ucla.library.libservices.invoicing.webservices.locations.db.procs.EditLocationServiceProcedure;
-import edu.ucla.library.libservices.invoicing.webservices.locations.generator.LocationServiceGenerator;
-import edu.ucla.library.libservices.invoicing.webservices.logging.beans.CashnetLog;
-import edu.ucla.library.libservices.invoicing.webservices.logging.db.procs.AddCashnetLogProcedure;
+import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.Address;
+import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.AlmaPatron;
+import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.Email;
 import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.PatronBean;
-import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.SimplePatron;
-import edu.ucla.library.libservices.invoicing.webservices.patrons.generator.PatronGenerator;
+import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.Phone;
+import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.UserIdentifier;
+import edu.ucla.library.libservices.invoicing.webservices.patrons.clients.PatronClient;
 
-import edu.ucla.library.libservices.invoicing.webservices.payments.beans.Payment;
-import edu.ucla.library.libservices.invoicing.webservices.payments.beans.ReceiptInfo;
-import edu.ucla.library.libservices.invoicing.webservices.payments.db.procs.AddPaymentProcedure;
-import edu.ucla.library.libservices.invoicing.webservices.payments.db.procs.ApplyFullPaymentProcedure;
-import edu.ucla.library.libservices.invoicing.webservices.payments.generator.ReceiptInfoGenerator;
-import edu.ucla.library.libservices.invoicing.webservices.staff.beans.StaffUser;
-import edu.ucla.library.libservices.invoicing.webservices.staff.beans.UserRole;
-import edu.ucla.library.libservices.invoicing.webservices.staff.db.procs.GetStaffUserFunction;
-import edu.ucla.library.libservices.invoicing.webservices.staff.db.procs.InsertStaffUserProcedure;
-import edu.ucla.library.libservices.invoicing.webservices.staff.db.procs.UpdateStaffUserProcedure;
-import edu.ucla.library.libservices.invoicing.webservices.staff.generator.UserRoleGenerator;
+import edu.ucla.library.libservices.invoicing.webservices.patrons.converters.AlmaVgerConverter;
 
-import edu.ucla.library.libservices.invoicing.webservices.taxes.beans.TaxRate;
-
-import edu.ucla.library.libservices.invoicing.webservices.taxes.db.procs.AddTaxRateProcedure;
-
-import edu.ucla.library.libservices.invoicing.webservices.taxes.db.procs.EditTaxRateProcedure;
-
-import edu.ucla.library.libservices.invoicing.webservices.taxes.generator.TaxRateGenerator;
-
-import java.io.UnsupportedEncodingException;
-
-import java.net.URLEncoder;
+import java.io.ByteArrayOutputStream;
 
 import java.security.SignatureException;
 
-import java.util.Date;
-
-import java.util.List;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.ws.rs.core.Response;
-
-import org.springframework.jdbc.UncategorizedSQLException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-
 public class Tester
 {
-  private static final String GET_LINE_ITEMS =
-    //"SELECT * FROM invoice_owner.invoice_line_vw WHERE lower(invoice_number) = ? " +
-    "SELECT i.*, l.item_code FROM invoice_line_vw i INNER JOIN " +
-    "location_service_vw l ON i.location_service_id = l.location_service_id" +
-    " WHERE lower(i.invoice_number) = ? ORDER BY i.line_number";
 
   public Tester()
   {
     super();
   }
 
-  public static void main( String[] args )
-    throws SignatureException, UnsupportedEncodingException
+  public static void main(String[] args)
   {
-    DriverManagerDataSource ds;
-    List<DisplayLineItem> items;
+    /*StringBuffer buffer;
 
-    ds = DataSourceFactory.createBillSource();
-    items = new JdbcTemplate( ds ).query( GET_LINE_ITEMS, new Object[]
-          { "SC003689".toLowerCase() }, new DisplayLineItemMapper() );
-
-    for ( DisplayLineItem theItem: items )
-      System.out.println( "item " + theItem.getLineNumber() +
-                          " has UC min " + theItem.getUcMinimum() +
-                          " and non-UC min " + theItem.getNonUcMinimum() );
-    /*Pattern p = Pattern.compile("[0-9]{9}");
-    Matcher m = p.matcher("1234567a9");
-    boolean b = Pattern.matches( "[0-9]{9}", "123456789" ); // m.matches();
-    System.out.println( "12345678 matches? " + b );
-    StringBuffer buffer;
-    buffer = new StringBuffer( "PUT" ).append( "\n" );
-    buffer.append( "invoicing-dev/invoices/add_invoice" ).append( "\n" );
-    buffer.append( "<invoice>" ).append( "\n" );
-    buffer.append( "<branchCode>SC</branchCode>" ).append( "\n" );
-    buffer.append( "<invoiceDate>Fri Feb 13 06:30:21 PST 2015</invoiceDate>" ).append( "\n" );
-    buffer.append( "<status>Pending</status>" ).append( "\n" );
-    buffer.append( "<createdBy>aeon_user</createdBy>" ).append( "\n" );
-    buffer.append( "<patronID>1</patronID>" ).append( "\n" );
-    buffer.append( "<onPremises>true</onPremises>" ).append( "\n" );
-    buffer.append( "</invoice>" ).append( "\n" );
+    buffer = new StringBuffer( "get" ).append( "\n" );
+    buffer.append( "/invoicing/patrons/patron_record/6035136122" ).append( "\n" );
     buffer.append( "-30-" );
-    System.out.println( SignatureCreator.hashSignature(
-      buffer.toString().trim(), "AD346AFFAC79596A6420" ) ); // "D55CDF30293C5EDCBD9A" ) );
-    System.out.println();
 
-
-    for ( String theLine : content )
+    try
     {
-      output.append( theLine ).append( "\n" );
+      System.out.println(SignatureCreator.hashSignature(buffer.toString().trim(), "E4538829F1"));
     }
-    output.append( "-30-" );
+    catch (SignatureException e)
+    {
+      e.printStackTrace();
+    }*/
+    AlmaPatron thePatron;
+    PatronBean theVger;
+    PatronClient client;
 
-    /*long start = System.currentTimeMillis();
-    PatronGenerator docMaker;
+    client = new PatronClient();
+    client.setKey("l8xx8cb982c2d4b04ef79375f5c776dbae71");
+    client.setUriBase("https://api-na.hosted.exlibrisgroup.com/almaws/v1/users/");
+    client.setUserID("6035136122");
 
-    docMaker = new PatronGenerator();
+    thePatron = client.getThePatron();
+    theVger = AlmaVgerConverter.convertPatron(thePatron);
+    System.out.println(theVger.getFirstName() + " " + theVger.getLastName() + " " + theVger.getBarcode());
+    System.out.println(theVger.getPermAddress1() + " " + theVger.getPermAddress2() + " " + theVger.getPermCity() + " " +
+                       theVger.getPermState() + " " + theVger.getPermCountry() + " " + theVger.getPermZip());
+    System.out.println(theVger.getEmail() + " " + theVger.getPhoneNumber());
 
-    docMaker.setDbBill( "" );
-    docMaker.setDbVger( "" );
-    docMaker.setInstitutionID( "001904955" );
+    System.out.println(thePatron.getFirstName() + " " + thePatron.getLastName() + " " + thePatron.getPatronID() + " " +
+                       thePatron.getUserGroup().getValue() + " " + thePatron.getUserGroup().getDescription());
+    for (UserIdentifier theID: thePatron.getUserIdentifiers())
+    {
+      System.out.println(theID.getType().getValue() + " " + theID.getValue());
+    }
+    for ( Address theAddress : thePatron.getContactInfo().getAddresses() )
+    {
+      System.out.println(theAddress.getLine1() + " " + theAddress.getLine2() + " " + theAddress.getCity()
+                         + " " + theAddress.getState() + " " + theAddress.getCountry().getDescription()
+                         + " " + theAddress.getZipCode());
+    }
+    for ( Email theMail : thePatron.getContactInfo().getEmails() )
+    {
+      System.out.println( theMail.getEmailAddress() + " " + theMail.isPreferred() );
+    }
+    for ( Phone thePhone : thePatron.getContactInfo().getPhones() )
+    {
+      System.out.println( thePhone.getPhoneNumber() + " " + thePhone.isPreferred() );
+    }
 
-    SimplePatron thePatron;
-    thePatron = docMaker.getBasicPatron();
-    long end = System.currentTimeMillis();
-    System.out.println( "time = " + ( end - start ) / 1000 );
-    System.out.println( "name = " + thePatron.getLastName() + ", " + thePatron.getFirstName() );
-    for ( SimpleHeader theInvoice : thePatron.getInvoices() )
-      System.out.println( "\t" + theInvoice.getInvoiceNumber() );*/
+    /*ByteArrayOutputStream baos;
+    Document document;
+    PdfGenerator generator;
+
+    document = new Document( PageSize.LETTER );
+    baos = new ByteArrayOutputStream();
+    generator = new PdfGenerator();
+    generator.setInvoiceNumber( "AS011102" );
+    try
+    {
+      PdfWriter.getInstance(document, baos);
+      generator.populatePdf( document, "204684742" );
+    }
+    catch (DocumentException de)
+    {
+      de.printStackTrace();
+    }*/
+
   }
 
 }

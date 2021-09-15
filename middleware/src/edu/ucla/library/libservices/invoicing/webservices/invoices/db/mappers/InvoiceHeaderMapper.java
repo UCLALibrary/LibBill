@@ -33,6 +33,7 @@ public class InvoiceHeaderMapper
     bean.setNontaxableTotal( rs.getDouble( "nontaxable_total" ) );
     bean.setOnPremises( rs.getString( "patron_on_premises" ) );
     bean.setPatronID( rs.getInt( "patron_id" ) );
+    bean.setPatronPrimaryID(rs.getString("priamry_id"));
     bean.setPhoneNumber( rs.getString( "phone_number" ) );
     bean.setStatus( rs.getString( "status" ) );
     bean.setTaxableTotal( rs.getDouble( "taxable_total" ) );
