@@ -2,8 +2,9 @@ create or replace function get_tax_rate_id (
   p_patron_id in invoice.patron_id%type
 , p_patron_on_premises in invoice.patron_on_premises%type
 , p_invoice_date in invoice.invoice_date%type
+, p_patron_zip_code in taxable_zip_code.zip_code%type
 ) return number as
-  v_patron_zip_code patron_vw.perm_zip%type;
+  v_patron_zip_code taxable_zip_code.zip_code%type;
   v_tax_rate_name tax_rate.rate_name%type;
   v_tax_rate_id tax_rate.rate_id%type;
 begin
@@ -12,15 +13,7 @@ begin
   if (p_patron_on_premises = 'Y') then
     v_patron_zip_code := get_application_setting('ucla_zip_code');
   else
-    -- TODO: just checking perm zip for now, probably need to check temp_zip first
-    -- Naive: grab the first 5 characters of zip code, no checking for validity yet
-    --  This regexp seems correct for US zips: '^[0-9]{5}[-]{0,1}([0-9]{4}){0,1}$'
-    -- Max() in case of multiple rows (bad data...)
-    select max(substr(perm_zip, 1, 5))
-      into v_patron_zip_code
-      from patron_vw
-      where patron_id = p_patron_id
-      and perm_state in ('CA', 'CAMPUS');
+    v_patron_zip_code := substr(p_patron_zip_code, 1, 5);
   end if;
 
   -- Get the tax rate associated with the zip code

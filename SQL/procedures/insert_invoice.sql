@@ -5,6 +5,7 @@ create or replace procedure insert_invoice (
 , p_user_name in staff_user.user_name%type
 , p_patron_id in invoice.patron_id%type
 , p_patron_on_premises in invoice.patron_on_premises%type
+, p_patron_zip_code in taxable_zip_code.zip_code%type
 , p_new_invoice_number out invoice.invoice_number%type
 ) as
   -- To work around JDBC-related problem storing CHAR(10) in passed-in output parameter
@@ -23,6 +24,8 @@ begin
     where location_code = p_location_code;
 
   -- Capture minimal patron data, if we don't already have it, in case patron is later deleted from ucladb
+  -- 20210922 During Voyager->Alma transition, disable this - data must come from Alma
+/*
   if patron_needs_stub(p_patron_id) = TRUE then
     insert into patron_stub (patron_id, normal_last_name, normal_first_name)
       -- Could be multiple rows in patron_vw (multiple groups, addresses)
@@ -30,7 +33,7 @@ begin
       from patron_vw
       where patron_id = p_patron_id;
   end if;
-    
+*/  
   -- Get next invoice number and add the invoice
   v_new_invoice_number := get_next_invoice_number(p_location_code);
   insert into invoice (
@@ -50,7 +53,7 @@ begin
   , p_patron_id
   , p_patron_on_premises
   , v_location_id
-  , get_tax_rate_id(p_patron_id, p_patron_on_premises, p_invoice_date)
+  , get_tax_rate_id(p_patron_id, p_patron_on_premises, p_invoice_date, p_patron_zip_code)
   );
   
   -- For output to caller, if all went well
