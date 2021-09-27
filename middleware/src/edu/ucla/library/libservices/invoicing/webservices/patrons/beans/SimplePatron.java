@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class SimplePatron
 {
   @XmlElement( name = "patronID" )
-  private int patronID;
+  private String patronID;
   @XmlElement( name = "barcode" )
   private String barcode;
   @XmlElement( name = "lastName" )
@@ -41,12 +41,12 @@ public class SimplePatron
     lastName = null;
   }
 
-  public void setPatronID( int patronID )
+  public void setPatronID( String patronID )
   {
     this.patronID = patronID;
   }
 
-  public int getPatronID()
+  public String getPatronID()
   {
     return patronID;
   }

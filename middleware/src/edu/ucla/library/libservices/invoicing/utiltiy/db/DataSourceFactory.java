@@ -33,7 +33,7 @@ public class DataSourceFactory
 
     ds = new DriverManagerDataSource();
     ds.setDriverClassName( "oracle.jdbc.OracleDriver" );
-    ds.setUrl( "jdbc:oracle:thin:@ils-db-prod.library.ucla.edu:1521:VGER" );
+    ds.setUrl( "jdbc:oracle:thin:@127.0.0.1:1522:VGER" );
     ds.setUsername( "invoice_service" );
     ds.setPassword( "invoice_service_pwd" );
 

@@ -8,6 +8,8 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import edu.ucla.library.libservices.invoicing.security.signatures.SignatureCreator;
+import edu.ucla.library.libservices.invoicing.webservices.invoices.beans.Invoice;
+import edu.ucla.library.libservices.invoicing.webservices.invoices.generator.InvoiceGenerator;
 import edu.ucla.library.libservices.invoicing.webservices.invoices.generator.PdfGenerator;
 
 import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.Address;
@@ -22,6 +24,10 @@ import edu.ucla.library.libservices.invoicing.webservices.patrons.converters.Alm
 
 import java.io.ByteArrayOutputStream;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 import java.security.SignatureException;
 
 public class Tester
@@ -33,8 +39,21 @@ public class Tester
   }
 
   public static void main(String[] args)
+    throws FileNotFoundException
   {
-    /*StringBuffer buffer;
+    /*InvoiceGenerator generator;
+
+    generator = new InvoiceGenerator();
+    generator.setInvoiceNumber( "SC000025" );
+    generator.setDbName( "datasource.invoice" );
+    generator.setAlmaKey( "l8xx8cb982c2d4b04ef79375f5c776dbae71" );
+    generator.setAlmaURI( "https://api-na.hosted.exlibrisgroup.com/almaws/v1/users/" );
+
+    Invoice theInvoice = generator.getInvoice();
+    System.out.println(theInvoice.getHeader().getInvoiceNumber());
+    System.out.println(theInvoice.getPatron().getBarcode());
+    System.out.println(theInvoice.getPatron().getPatronID());
+    StringBuffer buffer;
 
     buffer = new StringBuffer( "get" ).append( "\n" );
     buffer.append( "/invoicing/patrons/patron_record/6035136122" ).append( "\n" );
@@ -47,7 +66,7 @@ public class Tester
     catch (SignatureException e)
     {
       e.printStackTrace();
-    }*/
+    }
     AlmaPatron thePatron;
     PatronBean theVger;
     PatronClient client;
@@ -83,25 +102,32 @@ public class Tester
     for ( Phone thePhone : thePatron.getContactInfo().getPhones() )
     {
       System.out.println( thePhone.getPhoneNumber() + " " + thePhone.isPreferred() );
-    }
+    }*/
 
-    /*ByteArrayOutputStream baos;
+    File file;
+    FileOutputStream output;
+
+    //ByteArrayOutputStream baos;
     Document document;
     PdfGenerator generator;
 
+    file = new File( "C:\\temp\\alma\\SC000025.pdf" );
+    output = new FileOutputStream( file );
     document = new Document( PageSize.LETTER );
-    baos = new ByteArrayOutputStream();
+    //baos = new ByteArrayOutputStream();
     generator = new PdfGenerator();
-    generator.setInvoiceNumber( "AS011102" );
+    generator.setInvoiceNumber( "SC000025" );
+    generator.setAlmaKey("l8xx8cb982c2d4b04ef79375f5c776dbae71");
+    generator.setAlmaURI("https://api-na.hosted.exlibrisgroup.com/almaws/v1/users/");
     try
     {
-      PdfWriter.getInstance(document, baos);
-      generator.populatePdf( document, "204684742" );
+      PdfWriter.getInstance(document, output);
+      generator.populatePdf( document, "903369608" );
     }
     catch (DocumentException de)
     {
       de.printStackTrace();
-    }*/
+    }
 
   }
 

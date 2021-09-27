@@ -45,6 +45,8 @@ public class PdfGenerator
   private float[] columnWidths;
   private double adjustTotal = 0D;
   private boolean didAdjustCalc = false;
+  private String almaKey;
+  private String almaURI;
 
   private static final SimpleDateFormat DATE_OUTPUT =
     new SimpleDateFormat( "MM/dd/yyyy" );
@@ -97,6 +99,8 @@ public class PdfGenerator
     generator = new PdfInvoiceGenerator();
     generator.setInvoiceNumber( getInvoiceNumber() );
     generator.setDbName( getDbName() );
+    generator.setAlmaKey(getAlmaKey());
+    generator.setAlmaURI(getAlmaURI());
 
     theInvoice = generator.getInvoice();
 
@@ -379,7 +383,7 @@ public class PdfGenerator
     Image image;
 
     image =
-        Image.getInstance( new URL( "http://webservices.library.ucla.edu/images/Lib_Logo4Invoices.gif" ) );
+        Image.getInstance( new URL( "https://webservices.library.ucla.edu/images/Lib_Logo4Invoices.gif" ) );
 
     image.setAbsolutePosition( 350f, 750f );
     //image.scaleAbsolute( 50f, 15f );
@@ -898,6 +902,27 @@ public class PdfGenerator
       output =  MONEY_OUTPUT.format( theInvoice.getHeader().getTotalTax() );
     return output;
   }
+
+  public void setAlmaKey(String almaKey)
+  {
+    this.almaKey = almaKey;
+  }
+
+  public String getAlmaKey()
+  {
+    return almaKey;
+  }
+
+  public void setAlmaURI(String almaURI)
+  {
+    this.almaURI = almaURI;
+  }
+
+  public String getAlmaURI()
+  {
+    return almaURI;
+  }
+
 }
     /*para =
         new Paragraph( "Should you have any payment inquiries, please email lbs-billing@library.ucla.edu or phone (310) 206-9770.",

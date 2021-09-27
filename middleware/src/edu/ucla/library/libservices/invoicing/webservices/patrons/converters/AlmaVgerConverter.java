@@ -9,11 +9,8 @@ import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.Phone;
 import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.UserIdentifier;
 import edu.ucla.library.libservices.invoicing.webservices.patrons.utility.UcCommunityTypes;
 
-//import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.stream.Collectors;
-//import java.util.Collections;
 
 public class AlmaVgerConverter
 {
@@ -30,7 +27,7 @@ public class AlmaVgerConverter
     theVger.setFirstName(theAlma.getFirstName());
     theVger.setInstitutionID(theAlma.getPatronID());
     theVger.setLastName(theAlma.getLastName());
-    //theVger.setPatronID(theAlma.getPatronID());
+    theVger.setPatronID(theAlma.getPatronID());
     if (theAlma.getUserGroup() != null)
       theVger.setIsUC(determineCommunity(theAlma.getUserGroup().getValue()));
     if (theAlma.getContactInfo() != null)
@@ -47,7 +44,6 @@ public class AlmaVgerConverter
 
   private static boolean determineCommunity(final String userGroup)
   {
-    //return Arrays.stream(UcCommunityTypes.values()).anyMatch(elem -> elem.toString().equals(userGroup));
     boolean isUC = false;
     for (UcCommunityTypes theType: UcCommunityTypes.values())
     {

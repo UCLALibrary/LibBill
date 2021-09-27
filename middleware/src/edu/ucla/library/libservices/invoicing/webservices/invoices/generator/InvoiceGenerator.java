@@ -51,8 +51,7 @@ public class InvoiceGenerator
   private List<Invoice> multipleInvoices;
   private String dbName;
   private String invoiceNumber;
-  private int patronID;
-  private String patronPrimaryID;
+  private String patronID;
   private String almaKey;
   private String almaURI;
   private double invoiceTotal;
@@ -135,7 +134,6 @@ public class InvoiceGenerator
     invoice = new Invoice();
     invoice.setHeader( populateHeader() );
     invoice.setPatron( populatePatron( invoice.getHeader().getPatronID() ) );
-    //invoice.setPatron( populatePatron( invoice.getHeader().getPatronPrimaryID() ) );
     invoice.setLineItems( populateLineItems() );
     invoice.setPayments( populatePayments() );
     invoice.setLineAdjustments( populateLineAdjustments() );
@@ -310,22 +308,22 @@ public class InvoiceGenerator
         new InvoiceHeaderMapper() ).get( 0 );
   }
 
-  private PatronBean populatePatron( int patronID )
+  /*private PatronBean populatePatron( String patronID )
   {
     PatronGenerator generator;
     generator = new PatronGenerator();
     generator.setPatronID( patronID );
     generator.setDbName( getDbName() );
     return generator.getThePatronByID();
-  }
+  }*/
 
-  private PatronBean populatePatron( String barcode )
+  private PatronBean populatePatron( String patronID )
   {
     PatronGenerator generator;
 
     generator = new PatronGenerator();
 
-    generator.setBarcode(barcode);
+    generator.setBarcode(patronID);
     generator.setAlmaKey(getAlmaKey());
     generator.setAlmaURI(getAlmaURI());
     return generator.getPatronFromAlma();
@@ -383,12 +381,12 @@ public class InvoiceGenerator
     //ds = DataSourceFactory.createBillSource();
   }
 
-  public void setPatronID( int patronID )
+  public void setPatronID( String patronID )
   {
     this.patronID = patronID;
   }
 
-  private int getPatronID()
+  private String getPatronID()
   {
     return patronID;
   }
@@ -516,15 +514,5 @@ public class InvoiceGenerator
   public String getAlmaURI()
   {
     return almaURI;
-  }
-
-  public void setPatronPrimaryID(String patronPrimaryID)
-  {
-    this.patronPrimaryID = patronPrimaryID;
-  }
-
-  public String getPatronPrimaryID()
-  {
-    return patronPrimaryID;
   }
 }

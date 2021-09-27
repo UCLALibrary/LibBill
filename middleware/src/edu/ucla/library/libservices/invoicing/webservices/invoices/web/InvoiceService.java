@@ -141,6 +141,8 @@ public class InvoiceService
     generator = new InvoiceGenerator();
     generator.setInvoiceNumber( invoiceNo );
     generator.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+    generator.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
+    generator.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
 
     return generator.getInvoice();
   }
@@ -154,8 +156,10 @@ public class InvoiceService
     InvoiceGenerator generator;
 
     generator = new InvoiceGenerator();
-    generator.setPatronID( Integer.parseInt( patronID ) );
+    generator.setPatronID( patronID ); // Integer.parseInt( patronID ) );
     generator.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+    generator.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
+    generator.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
     generator.getInvoicesByPatron();
     return generator;
   }
@@ -171,6 +175,8 @@ public class InvoiceService
     generator = new InvoiceGenerator();
     generator.setInvoiceNumber( invoiceID );
     generator.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+    generator.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
+    generator.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
     //generator.getInvoicesByPatron();
     return generator.getSimpleInvoice();
   }
@@ -186,6 +192,8 @@ public class InvoiceService
     generator = new InvoiceGenerator();
     generator.setInvoiceNumber( invoiceID );
     generator.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+    generator.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
+    generator.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
     //generator.getInvoicesByPatron();
     return generator.getCnInvoice();
   }
@@ -201,6 +209,8 @@ public class InvoiceService
     generator = new InvoiceGenerator();
     generator.setInvoiceTotal( Double.parseDouble( amount ) );
     generator.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+    generator.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
+    generator.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
     generator.getInvoicesByTotal();
     return generator;
   }
@@ -219,6 +229,8 @@ public class InvoiceService
     generator.setTotalLow( Double.parseDouble( low ) );
     generator.setTotalHigh( Double.parseDouble( high ) );
     generator.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+    generator.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
+    generator.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
     generator.getInvoicesByTotalRange();
     return generator;
   }
@@ -234,6 +246,8 @@ public class InvoiceService
     generator = new InvoiceGenerator();
     generator.setStartDate( date );
     generator.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+    generator.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
+    generator.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
     generator.getInvoicesByOneDate();
     return generator;
   }
@@ -250,6 +264,8 @@ public class InvoiceService
     generator = new InvoiceGenerator();
     generator.setNote( note );
     generator.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+    generator.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
+    generator.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
     generator.getInvoicesByNote();
     return generator;
   }
@@ -265,6 +281,8 @@ public class InvoiceService
     generator = new InvoiceGenerator();
     generator.setNote( note );
     generator.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+    generator.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
+    generator.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
     generator.getInvoicesByInvNote();
     return generator;
   }
@@ -280,6 +298,8 @@ public class InvoiceService
     generator = new InvoiceGenerator();
     generator.setNote( note );
     generator.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+    generator.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
+    generator.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
     generator.getInvoicesByLineNote();
     return generator;
   }
@@ -297,6 +317,8 @@ public class InvoiceService
     generator.setStartDate( start );
     generator.setEndDate( end );
     generator.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+    generator.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
+    generator.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
     generator.getInvoicesByDateRange();
     return generator;
   }
@@ -368,6 +390,8 @@ public class InvoiceService
       generator = new PdfGenerator();
       generator.setInvoiceNumber( invoiceNo );
       generator.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+      generator.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
+      generator.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
 
       PdfWriter.getInstance( document, baos );
       generator.populatePdf( document );
@@ -398,6 +422,8 @@ public class InvoiceService
       generator = new PdfGenerator();
       generator.setInvoiceNumber( invoiceNo ); // message.getInvoiceNo().trim() );
       generator.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+      generator.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
+      generator.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
 
       //message.getInvoiceNo().trim() ).append( ".pdf" );
       fileName =

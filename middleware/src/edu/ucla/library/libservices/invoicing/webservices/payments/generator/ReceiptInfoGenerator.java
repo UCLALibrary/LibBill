@@ -20,7 +20,7 @@ public class ReceiptInfoGenerator
 
   private static final String BASE_QUERY =
     "SELECT ivw.status, up.normal_first_name || ' ' || up.normal_last_name AS" +
-    " user_name, up.institution_id, ivw.patron_id FROM invoice_vw ivw INNER JOIN " +
+    " user_name, up.patron_id AS institution_id, ivw.patron_id FROM invoice_vw ivw INNER JOIN " +
     "patron_vw up ON ivw.patron_id = up.patron_id WHERE ivw.invoice_number = ?";
   private static final String UNPAID_QUERY =
     "SELECT COUNT(invoice_number) FROM invoice_vw WHERE patron_id = ? AND " 

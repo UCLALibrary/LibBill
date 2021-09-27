@@ -66,7 +66,8 @@ public class PatronService
     //docMaker.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
     docMaker.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
     docMaker.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
-    return Response.ok().entity( docMaker.getPatronFromAlma() ).build();
+    docMaker.prepPatronFromAlma();
+    return Response.ok().entity( docMaker ).build();
   }
 
   @GET

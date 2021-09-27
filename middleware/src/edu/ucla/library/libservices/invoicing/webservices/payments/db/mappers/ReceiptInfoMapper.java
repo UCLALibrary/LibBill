@@ -21,7 +21,7 @@ public class ReceiptInfoMapper
     ReceiptInfo bean;
     
     bean = new ReceiptInfo();
-    bean.setPatronID( rs.getInt( "patron_id" ) );
+    bean.setPatronID( rs.getString( "patron_id" ) );
     bean.setStatus( rs.getString( "status" ) );
     bean.setUid( rs.getString( "institution_id" ) );
     bean.setUserName( rs.getString( "user_name" ) );

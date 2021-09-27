@@ -19,6 +19,8 @@ import javax.sql.DataSource;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 //import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
@@ -34,17 +36,19 @@ public class PatronGenerator
   private String dbName;
   private String dbVger;
   private String dbBill;
-  private int patronID;
+  private String patronID;
+  @XmlTransient
   private String almaKey;
+  @XmlTransient
   private String almaURI;
   @XmlElement( name = "patron" )
   private List<PatronBean> patrons;
   private PatronBean thePatronByID;
   private SimplePatron basicPatron;
   private static final String BARCODE_COUNT =
-    "SELECT COUNT(patron_id) FROM patron_vw WHERE lower(patron_barcode) = ? ORDER BY normal_last_name";
+    "SELECT COUNT(patron_id) FROM patron_vw WHERE lower(patron_id) = ? ORDER BY normal_last_name";
   private static final String PATRON_BY_BARCODE =
-    "SELECT * FROM patron_vw WHERE lower(patron_barcode) = ? ORDER BY normal_last_name";
+    "SELECT * FROM patron_vw WHERE lower(patron_id) = ? ORDER BY normal_last_name";
   private static final String PATRON_BY_ID =
     "SELECT * FROM patron_vw WHERE patron_id = ? ORDER BY normal_last_name";
   private static final String PATRON_BY_LNAME =
@@ -57,18 +61,16 @@ public class PatronGenerator
     "SELECT * FROM patron_vw WHERE normal_last_name like '%' || ? || '%' AND " +
     "normal_first_name like '%' || ? || '%' ORDER BY normal_last_name, normal_first_name";
   private static final String PATRON_COUNT =
-    "SELECT COUNT(patron_id) FROM ucladb.patron WHERE lower(institution_id) = ?";
-  //"SELECT COUNT(patron_id) FROM patron_vw WHERE institution_id = ?";
+    "SELECT COUNT(patron_id) FROM ucladb.patron WHERE lower(patron_id) = ?";
   private static final String PATRON_BY_INSTITUTION =
-    "SELECT * FROM ucladb.patron WHERE lower(institution_id) = ? ORDER BY normal_last_name";
-  //"SELECT * FROM patron_vw WHERE institution_id = ? ORDER BY normal_last_name";
+    "SELECT * FROM ucladb.patron WHERE lower(patron_id) = ? ORDER BY normal_last_name";
   private static final String UNPAID_INVOICE_IDS =
     "SELECT i.* FROM invoice_vw i INNER JOIN patron_vw p ON i.patron_id = " +
     "p.patron_id WHERE i.status IN ('Partially Paid','Unpaid', 'Deposit Due'," +
-    " 'Final Payment Due') AND lower(p.institution_id) = ? UNION SELECT " +
+    " 'Final Payment Due') AND lower(p.patron_id) = ?"; /* UNION SELECT " +
     "i.* FROM invoice_vw i INNER JOIN patron_vw p ON i.patron_id = " +
     "p.patron_id WHERE i.status IN ('Partially Paid','Unpaid', 'Deposit " +
-    "Due', 'Final Payment Due') AND lower(p.patron_barcode) = ?";
+    "Due', 'Final Payment Due') AND lower(p.patron_barcode) = ?";*/
 
   public PatronGenerator()
   {
@@ -108,12 +110,12 @@ public class PatronGenerator
     return lastName;
   }
 
-  public void setPatronID( int patronID )
+  public void setPatronID( String patronID )
   {
     this.patronID = patronID;
   }
 
-  private int getPatronID()
+  private String getPatronID()
   {
     return patronID;
   }
@@ -264,6 +266,23 @@ public class PatronGenerator
     return theVger;
   }
 
+  public void prepPatronFromAlma()
+  {
+    AlmaPatron thePatron;
+    PatronBean theVger;
+    PatronClient client;
+
+    client = new PatronClient();
+    client.setKey(getAlmaKey());
+    client.setUriBase(getAlmaURI());
+    client.setUserID(getBarcode());
+
+    thePatron = client.getThePatron();
+    theVger = AlmaVgerConverter.convertPatron(thePatron);
+    patrons = new ArrayList<PatronBean>();
+    patrons.add(theVger);
+    //return theVger;
+  }
   public void setInstitutionID( String institutionID )
   {
     this.institutionID = institutionID;

@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class PatronBean
 {
   @XmlElement( name = "patronID" ) //, nillable = true )
-  private int patronID;
+  private String patronID;
   @XmlElement( name = "barcode" ) //, nillable = true )
   private String barcode;
   @XmlElement( name = "lastName" ) //, nillable = true )
@@ -83,12 +83,12 @@ public class PatronBean
     super();
   }
 
-  public void setPatronID( int patronID )
+  public void setPatronID( String patronID )
   {
     this.patronID = patronID;
   }
 
-  public int getPatronID()
+  public String getPatronID()
   {
     return patronID;
   }

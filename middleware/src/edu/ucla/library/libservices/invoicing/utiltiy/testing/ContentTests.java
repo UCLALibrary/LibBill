@@ -9,12 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class ContentTests
 {
   private static final String GET_INVOICE =
-    "SELECT COUNT(ivw.invoice_number) FROM invoice_vw ivw INNER JOIN " 
-    + "patron_vw pvw ON ivw.patron_id = pvw.patron_id WHERE ivw.invoice_number" 
-    + " = ? and pvw.institution_id = ?";
-  private static final String GET_INVOICE_ALT =
     "SELECT COUNT(ivw.invoice_number) FROM invoice_vw ivw WHERE ivw.invoice_number" 
-    + " = ? and ivw.primary_id = ?";
+    + " = ? and ivw.patron_id = ?";
 
   public ContentTests()
   {

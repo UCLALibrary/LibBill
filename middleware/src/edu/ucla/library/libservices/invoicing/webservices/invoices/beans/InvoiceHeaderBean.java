@@ -26,7 +26,7 @@ public class InvoiceHeaderBean
   @XmlElement( name = "createdBy" )
   private String createdBy;
   @XmlElement( name = "patronID" )
-  private int patronID;
+  private String patronID;
   @XmlElement( name = "patronPrimaryID" )
   private String patronPrimaryID;
   @XmlElement( name = "balanceDue" )
@@ -106,12 +106,12 @@ public class InvoiceHeaderBean
     return createdBy;
   }
 
-  public void setPatronID( int patronID )
+  public void setPatronID( String patronID )
   {
     this.patronID = patronID;
   }
 
-  public int getPatronID()
+  public String getPatronID()
   {
     return patronID;
   }

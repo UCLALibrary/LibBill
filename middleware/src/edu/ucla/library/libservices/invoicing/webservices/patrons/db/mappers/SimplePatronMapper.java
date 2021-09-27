@@ -28,7 +28,7 @@ public class SimplePatronMapper
     bean.setInstitutionID( rs.getString( "institution_id" ) );
     //bean.setIsUC( rs.getBoolean( "uc_community" ) );
     bean.setLastName( rs.getString( "normal_last_name" ) );
-    bean.setPatronID( rs.getInt( "patron_id" ) );
+    bean.setPatronID( rs.getString( "patron_id" ) );
 
     return bean;
   }

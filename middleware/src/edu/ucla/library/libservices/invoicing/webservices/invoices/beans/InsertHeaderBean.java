@@ -24,11 +24,11 @@ public class InsertHeaderBean
   @XmlElement( name = "createdBy" )
   private String createdBy;
   @XmlElement( name = "patronID" )
-  private int patronID;
-  @XmlElement( name = "patronPrimaryID" )
-  private int patronPrimaryID;
+  private String patronID;
   @XmlElement( name = "onPremises" )
   private String onPremises;
+  @XmlElement( name = "zipCode" )
+  private String zipCode;
 
   public InsertHeaderBean()
   {
@@ -75,12 +75,12 @@ public class InsertHeaderBean
     return createdBy;
   }
 
-  public void setPatronID( int patronID )
+  public void setPatronID( String patronID )
   {
     this.patronID = patronID;
   }
 
-  public int getPatronID()
+  public String getPatronID()
   {
     return patronID;
   }
@@ -95,13 +95,13 @@ public class InsertHeaderBean
     return onPremises;
   }
 
-  public void setPatronPrimaryID(int patronPrimaryID)
+  public void setZipCode(String zipCode)
   {
-    this.patronPrimaryID = patronPrimaryID;
+    this.zipCode = zipCode;
   }
 
-  public int getPatronPrimaryID()
+  public String getZipCode()
   {
-    return patronPrimaryID;
+    return zipCode;
   }
 }

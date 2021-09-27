@@ -44,7 +44,7 @@ public class PdfInvoiceGenerator
   private String invoiceNumber;
   private String almaKey;
   private String almaURI;
-  private String patronPrimaryID;
+  private String patronID;
 
   public PdfInvoiceGenerator()
   {
@@ -62,7 +62,6 @@ public class PdfInvoiceGenerator
     invoice = new PdfInvoice();
     invoice.setHeader( populateHeader() );
     invoice.setPatron( populatePatron( invoice.getHeader().getPatronID() ) );
-    //invoice.setPatron( populatePatron( invoice.getHeader().getPatronPrimaryID() ) );
     invoice.setPayments( populatePayments() );
     invoice.setInvoiceNotes( populateInvoiceNotes() );
     invoice.setInvoiceAdjustments( populateInvoiceAdjustments() );
@@ -92,8 +91,8 @@ public class PdfInvoiceGenerator
 
   private void makeConnection()
   {
-    //ds = DataSourceFactory.createDataSource( getDbName() );
-    ds = DataSourceFactory.createBillSource();
+    ds = DataSourceFactory.createDataSource( getDbName() );
+    //ds = DataSourceFactory.createBillSource();
   }
 
   private InvoiceHeaderBean populateHeader()
@@ -103,22 +102,22 @@ public class PdfInvoiceGenerator
       new InvoiceHeaderMapper() ).get( 0 );
   }
 
-  private PatronBean populatePatron( int patronID )
+  /*private PatronBean populatePatron( String patronID )
   {
     PatronGenerator generator;
     generator = new PatronGenerator();
     generator.setPatronID( patronID );
     generator.setDbName( getDbName() );
     return generator.getThePatronByID();
-  }
+  }*/
 
-  private PatronBean populatePatron( String barcode )
+  private PatronBean populatePatron( String patronID )
   {
     PatronGenerator generator;
 
     generator = new PatronGenerator();
 
-    generator.setBarcode(barcode);
+    generator.setBarcode(patronID);
     generator.setAlmaKey(getAlmaKey());
     generator.setAlmaURI(getAlmaURI());
     return generator.getPatronFromAlma();
@@ -174,13 +173,13 @@ public class PdfInvoiceGenerator
     return almaURI;
   }
 
-  public void setPatronPrimaryID(String patronPrimaryID)
+  public void setPatronID(String patronID)
   {
-    this.patronPrimaryID = patronPrimaryID;
+    this.patronID = patronID;
   }
 
-  public String getPatronPrimaryID()
+  public String getPatronID()
   {
-    return patronPrimaryID;
+    return patronID;
   }
 }

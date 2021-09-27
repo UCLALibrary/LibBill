@@ -14,7 +14,7 @@ public class ReceiptInfo
   @XmlElement( name = "userName" )
   private String userName;
   @XmlElement( name = "patronID" )
-  private int patronID;
+  private String patronID;
   @XmlElement( name = "uid" )
   private String uid;
   @XmlElement( name = "unpaid" )
@@ -45,12 +45,12 @@ public class ReceiptInfo
     return userName;
   }
 
-  public void setPatronID( int patronID )
+  public void setPatronID( String patronID )
   {
     this.patronID = patronID;
   }
 
-  public int getPatronID()
+  public String getPatronID()
   {
     return patronID;
   }

@@ -37,7 +37,7 @@ public class PatronMapper
     bean.setLocalCountry( rs.getString( "temp_country" ) );
     bean.setLocalState( rs.getString( "temp_state" ) );
     bean.setLocalZip( rs.getString( "temp_zip" ) );
-    bean.setPatronID( rs.getInt( "patron_id" ) );
+    bean.setPatronID( rs.getString( "patron_id" ) );
     bean.setPermAddress1( rs.getString( "perm_address1" ) );
     bean.setPermAddress2( rs.getString( "perm_address2" ) );
     bean.setPermAddress3( rs.getString( "perm_address3" ) );
