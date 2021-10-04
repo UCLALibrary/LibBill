@@ -65,7 +65,7 @@ public class InvoiceAdjustmentGenerator
 
   private void makeConnection()
   {
-    //ds = DataSourceFactory.createDataSource( getDbName() );
-    ds = DataSourceFactory.createBillSource();
+    ds = DataSourceFactory.createDataSource( getDbName() );
+    //ds = DataSourceFactory.createBillSource();
   }
 }

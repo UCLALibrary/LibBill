@@ -56,8 +56,8 @@ public class AddLineItemNoteProcedure
 
   private void makeConnection()
   {
-    //ds = DataSourceFactory.createDataSource( getDbName() );
-    ds = DataSourceFactory.createBillSource();
+    ds = DataSourceFactory.createDataSource( getDbName() );
+    //ds = DataSourceFactory.createBillSource();
   }
 
   public void addNote()

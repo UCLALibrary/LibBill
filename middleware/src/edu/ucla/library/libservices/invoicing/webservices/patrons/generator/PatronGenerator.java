@@ -65,9 +65,11 @@ public class PatronGenerator
   private static final String PATRON_BY_INSTITUTION =
     "SELECT * FROM ucladb.patron WHERE lower(patron_id) = ? ORDER BY normal_last_name";
   private static final String UNPAID_INVOICE_IDS =
-    "SELECT i.* FROM invoice_vw i INNER JOIN patron_vw p ON i.patron_id = " +
+    "SELECT i.* FROM invoice_vw i WHERE i.status IN ('Partially Paid','Unpaid', 'Deposit Due', " 
+    + "'Final Payment Due') AND lower(i.patron_id) = ?";
+    /*"SELECT i.* FROM invoice_vw i INNER JOIN patron_vw p ON i.patron_id = " +
     "p.patron_id WHERE i.status IN ('Partially Paid','Unpaid', 'Deposit Due'," +
-    " 'Final Payment Due') AND lower(p.patron_id) = ?"; /* UNION SELECT " +
+    " 'Final Payment Due') AND lower(p.patron_id) = ? UNION SELECT " +
     "i.* FROM invoice_vw i INNER JOIN patron_vw p ON i.patron_id = " +
     "p.patron_id WHERE i.status IN ('Partially Paid','Unpaid', 'Deposit " +
     "Due', 'Final Payment Due') AND lower(p.patron_barcode) = ?";*/
@@ -209,10 +211,14 @@ public class PatronGenerator
 
   public SimplePatron getBasicPatron()
   {
-    makeVgerConnection();
+    //makeVgerConnection();
     basicPatron = new SimplePatron();
+    makeBillConnection();
+    basicPatron.setInvoices(new JdbcTemplate(ds)
+                            .query(UNPAID_INVOICE_IDS, new Object[] { getInstitutionID() }, new SimpleHeaderMapper()));
+    return basicPatron;
 
-    if ( new JdbcTemplate( ds ).queryForInt( PATRON_COUNT, new Object[]
+    /*if ( new JdbcTemplate( ds ).queryForInt( PATRON_COUNT, new Object[]
         { getInstitutionID().toLowerCase() } ) == 1 )
     {
       basicPatron =
@@ -245,9 +251,7 @@ public class PatronGenerator
               { basicPatron.getInstitutionID(), basicPatron.getBarcode() },
               new SimpleHeaderMapper() ) );
       }
-    }
-
-    return basicPatron;
+    }*/
   }
 
   public PatronBean getPatronFromAlma()

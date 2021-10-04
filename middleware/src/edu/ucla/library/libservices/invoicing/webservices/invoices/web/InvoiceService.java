@@ -43,6 +43,8 @@ import java.net.URLDecoder;
 //import java.util.ArrayList;
 //import java.util.List;
 
+import java.util.Enumeration;
+
 import javax.mail.MessagingException;
 
 import javax.servlet.ServletConfig;
@@ -140,6 +142,14 @@ public class InvoiceService
 
     generator = new InvoiceGenerator();
     generator.setInvoiceNumber( invoiceNo );
+
+    Enumeration<String> params = config.getServletContext().getInitParameterNames();
+    while (params.hasMoreElements())
+    {
+      String theName = params.nextElement();
+      this.config.getServletContext().log(theName + " = " + config.getServletContext().getInitParameter(theName));
+    }
+
     generator.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
     generator.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
     generator.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));

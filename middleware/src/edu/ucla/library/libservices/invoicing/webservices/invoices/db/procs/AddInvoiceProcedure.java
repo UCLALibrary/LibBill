@@ -82,7 +82,6 @@ public class AddInvoiceProcedure
     declareParameter( new SqlParameter( "p_status", Types.VARCHAR ) );
     declareParameter( new SqlParameter( "p_user_name", Types.CHAR ) );
     declareParameter( new SqlParameter( "p_patron_id", Types.VARCHAR ) );
-    declareParameter( new SqlParameter( "p_patron_primary_id", Types.VARCHAR ) );
     declareParameter( new SqlParameter( "p_patron_on_premises", Types.CHAR ) );
     declareParameter( new SqlParameter( "p_patron_zip_code", Types.VARCHAR ) );
     declareParameter( new SqlOutParameter( "p_new_invoice_number",

@@ -8,7 +8,10 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import edu.ucla.library.libservices.invoicing.security.signatures.SignatureCreator;
+import edu.ucla.library.libservices.invoicing.webservices.invoices.beans.InsertHeaderBean;
 import edu.ucla.library.libservices.invoicing.webservices.invoices.beans.Invoice;
+import edu.ucla.library.libservices.invoicing.webservices.invoices.beans.SimpleHeader;
+import edu.ucla.library.libservices.invoicing.webservices.invoices.db.procs.AddInvoiceProcedure;
 import edu.ucla.library.libservices.invoicing.webservices.invoices.generator.InvoiceGenerator;
 import edu.ucla.library.libservices.invoicing.webservices.invoices.generator.PdfGenerator;
 
@@ -17,10 +20,13 @@ import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.AlmaPatr
 import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.Email;
 import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.PatronBean;
 import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.Phone;
+import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.SimplePatron;
 import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.UserIdentifier;
 import edu.ucla.library.libservices.invoicing.webservices.patrons.clients.PatronClient;
 
 import edu.ucla.library.libservices.invoicing.webservices.patrons.converters.AlmaVgerConverter;
+
+import edu.ucla.library.libservices.invoicing.webservices.patrons.generator.PatronGenerator;
 
 import java.io.ByteArrayOutputStream;
 
@@ -29,6 +35,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import java.security.SignatureException;
+
+import java.util.Date;
 
 public class Tester
 {
@@ -41,6 +49,40 @@ public class Tester
   public static void main(String[] args)
     throws FileNotFoundException
   {
+    PatronGenerator docMaker;
+    SimplePatron thePatron;
+
+    docMaker = new PatronGenerator();
+
+    docMaker.setInstitutionID( "004550164" );
+    docMaker.setDbBill( "datasource.invoice" );
+    docMaker.setDbVger( "datasource.oracle" );
+    thePatron = docMaker.getBasicPatron();
+    for ( SimpleHeader theHeader : thePatron.getInvoices() )
+    {
+      System.out.println(theHeader.getInvoiceNumber() + " : " + theHeader.getBalanceDue());
+    }
+
+    /*AddInvoiceProcedure proc;
+    InsertHeaderBean bean;
+    String invNo;
+
+    bean = new InsertHeaderBean();
+    bean.setBranchCode("SC");
+    bean.setCreatedBy("test_inv_prep");
+    bean.setInvoiceDate(new Date());
+    bean.setOnPremises("Y");
+    bean.setPatronID("903369608");
+    bean.setStatus("Pending");
+    bean.setZipCode("90042");
+
+    proc = new AddInvoiceProcedure();
+
+    proc.setData( bean );
+    proc.setDbName( "datasource.invoice" );
+    invNo = proc.addInvoice();
+    System.out.println(invNo);*/
+
     /*InvoiceGenerator generator;
 
     generator = new InvoiceGenerator();
@@ -108,7 +150,7 @@ public class Tester
     FileOutputStream output;
 
     //ByteArrayOutputStream baos;
-    Document document;
+    /*Document document;
     PdfGenerator generator;
 
     file = new File( "C:\\temp\\alma\\SC000025.pdf" );
@@ -127,7 +169,7 @@ public class Tester
     catch (DocumentException de)
     {
       de.printStackTrace();
-    }
+    }*/
 
   }
 
