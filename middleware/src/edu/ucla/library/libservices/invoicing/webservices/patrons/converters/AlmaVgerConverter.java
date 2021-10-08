@@ -167,7 +167,8 @@ public class AlmaVgerConverter
     theVger.setPermAddress4(perm.getLine4());
     theVger.setPermAddress5(perm.getLine5());
     theVger.setPermCity(perm.getCity());
-    theVger.setPermCountry(perm.getCountry().getValue());
+    if (perm.getCountry() != null)
+      theVger.setPermCountry(perm.getCountry().getValue());
     theVger.setPermState(perm.getState());
     theVger.setPermZip(perm.getZipCode());
   }
@@ -231,9 +232,9 @@ public class AlmaVgerConverter
     final List<UserIdentifier> barcodes = new ArrayList<>();
     for (UserIdentifier theID: identifiers)
     {
-      if (theID.getType()
-               .getValue()
-               .equalsIgnoreCase("barcode"))
+      if (theID.getType() != null && theID.getType()
+                                                     .getValue()
+                                                     .equalsIgnoreCase("barcode"))
       {
         barcodes.add(theID);
       }

@@ -123,6 +123,8 @@ public class PatronService
                                                    params.get( "last" ):
                                                    "" ), "utf-8" ) );
         docMaker.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+        docMaker.setAlmaKey( "l8xx8cb982c2d4b04ef79375f5c776dbae71" );
+        docMaker.setAlmaURI( "https://api-na.hosted.exlibrisgroup.com/almaws/v1/users/" );
         docMaker.getPatronsByName();
         
         return Response.ok( docMaker ).build();

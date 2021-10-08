@@ -9,22 +9,28 @@ import edu.ucla.library.libservices.invoicing.webservices.patrons.beans.SimplePa
 import edu.ucla.library.libservices.invoicing.webservices.patrons.clients.PatronClient;
 import edu.ucla.library.libservices.invoicing.webservices.patrons.converters.AlmaVgerConverter;
 import edu.ucla.library.libservices.invoicing.webservices.patrons.db.mappers.PatronMapper;
-import edu.ucla.library.libservices.invoicing.webservices.patrons.db.mappers.SimplePatronMapper;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+
+//import edu.ucla.library.libservices.invoicing.webservices.patrons.db.mappers.SimplePatronMapper;
 //import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @XmlRootElement( name = "patronList" )
+@XmlAccessorType(XmlAccessType.NONE)
 public class PatronGenerator
 {
   //private DriverManagerDataSource ds;
@@ -52,13 +58,13 @@ public class PatronGenerator
   private static final String PATRON_BY_ID =
     "SELECT * FROM patron_vw WHERE patron_id = ? ORDER BY normal_last_name";
   private static final String PATRON_BY_LNAME =
-    "SELECT * FROM patron_vw WHERE normal_last_name like '%' || ? || '%' " +
+    "SELECT patron_id FROM patron_vw WHERE normal_last_name like '%' || ? || '%' " +
     "ORDER BY normal_last_name, normal_first_name";
   private static final String PATRON_BY_FNAME =
-    "SELECT * FROM patron_vw WHERE normal_first_name like '%' || ? || '%' " +
+    "SELECT patron_id FROM patron_vw WHERE normal_first_name like '%' || ? || '%' " +
     "ORDER BY normal_last_name, normal_first_name";
   private static final String PATRON_BY_FULLNAME =
-    "SELECT * FROM patron_vw WHERE normal_last_name like '%' || ? || '%' AND " +
+    "SELECT patron_id FROM patron_vw WHERE normal_last_name like '%' || ? || '%' AND " +
     "normal_first_name like '%' || ? || '%' ORDER BY normal_last_name, normal_first_name";
   private static final String PATRON_COUNT =
     "SELECT COUNT(patron_id) FROM ucladb.patron WHERE lower(patron_id) = ?";
@@ -161,27 +167,43 @@ public class PatronGenerator
   public void getPatronsByName()
   {
     makeConnection();
-
+    List<String> patronIDs = new ArrayList<>();
+    
     //both first & last
     if ( !ContentTests.isEmpty( getFirstName() ) &&
          !ContentTests.isEmpty( getLastName() ) )
     {
-      patrons =
+      patronIDs =
+        new JdbcTemplate(ds)
+        .queryForList(PATRON_BY_FULLNAME, new Object[] { getLastName().toUpperCase(), getFirstName().toUpperCase() },
+                      String.class);
+      populateFromIDs(patronIDs);
+      /*patrons =
           new JdbcTemplate( ds ).query( PATRON_BY_FULLNAME, new Object[]
             { getLastName().toUpperCase(), getFirstName().toUpperCase() },
-            new PatronMapper() );
+            new PatronMapper() );*/
     }
     //else first only
     else if ( !ContentTests.isEmpty( getFirstName() ) )
     {
-      patrons = new JdbcTemplate( ds ).query( PATRON_BY_FNAME, new Object[]
-            { getFirstName().toUpperCase() }, new PatronMapper() );
+      patronIDs =
+        new JdbcTemplate(ds)
+        .queryForList(PATRON_BY_FNAME, new Object[] { getFirstName().toUpperCase() },
+                      String.class);
+      populateFromIDs(patronIDs);
+      /*patrons = new JdbcTemplate( ds ).query( PATRON_BY_FNAME, new Object[]
+            { getFirstName().toUpperCase() }, new PatronMapper() );*/
     }
     //else last only
     else if ( !ContentTests.isEmpty( getLastName() ) )
     {
-      patrons = new JdbcTemplate( ds ).query( PATRON_BY_LNAME, new Object[]
-            { getLastName().toUpperCase() }, new PatronMapper() );
+      patronIDs =
+        new JdbcTemplate(ds)
+        .queryForList(PATRON_BY_LNAME, new Object[] { getLastName().toUpperCase() },
+                      String.class);
+      populateFromIDs(patronIDs);
+      /*patrons = new JdbcTemplate( ds ).query( PATRON_BY_LNAME, new Object[]
+            { getLastName().toUpperCase() }, new PatronMapper() );*/
     }
     else
     {
@@ -284,9 +306,10 @@ public class PatronGenerator
     thePatron = client.getThePatron();
     theVger = AlmaVgerConverter.convertPatron(thePatron);
     patrons = new ArrayList<PatronBean>();
-    patrons.add(theVger);
-    //return theVger;
+    if ( !theVger.getFirstName().equals("NOT_FOUND") )
+      patrons.add(theVger);
   }
+
   public void setInstitutionID( String institutionID )
   {
     this.institutionID = institutionID;
@@ -340,5 +363,27 @@ public class PatronGenerator
   public String getAlmaURI()
   {
     return almaURI;
+  }
+
+  private void populateFromIDs(List<String> patronIDs)
+  {
+    patrons = new ArrayList<PatronBean>();
+    for (String theID : patronIDs)
+    {
+      PatronBean thePatron;
+      try
+      {
+        this.setBarcode(URLEncoder.encode(theID, "UTF-8"));
+      }
+      catch (UnsupportedEncodingException e)
+      {
+        this.setBarcode("");
+      }
+      thePatron = getPatronFromAlma();
+      if (!thePatron.getFirstName().equals("NOT_FOUND"))
+      {
+        patrons.add(thePatron);
+      }
+    }
   }
 }

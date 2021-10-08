@@ -34,9 +34,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+import java.net.URLDecoder;
+
 import java.security.SignatureException;
 
 import java.util.Date;
+import java.util.List;
 
 public class Tester
 {
@@ -49,19 +52,31 @@ public class Tester
   public static void main(String[] args)
     throws FileNotFoundException
   {
-    PatronGenerator docMaker;
-    SimplePatron thePatron;
+    /*PatronGenerator docMaker;
+    List<PatronBean> thePatrons;
 
     docMaker = new PatronGenerator();
+    docMaker.setFirstName( "David" );
+    docMaker.setLastName( "" );
+    docMaker.setDbName( "datasource.invoice" );
+    docMaker.setAlmaKey( "l8xx8cb982c2d4b04ef79375f5c776dbae71" );
+    docMaker.setAlmaURI( "https://api-na.hosted.exlibrisgroup.com/almaws/v1/users/" );
+    docMaker.getPatronsByName();
+    
+    thePatrons = docMaker.getPatrons();
+    for ( PatronBean patron : thePatrons )
+    {
+      System.out.println(patron.getFirstName() + " " + patron.getLastName() + " " + patron.getPatronID());
+    }*/
 
-    docMaker.setInstitutionID( "004550164" );
-    docMaker.setDbBill( "datasource.invoice" );
-    docMaker.setDbVger( "datasource.oracle" );
-    thePatron = docMaker.getBasicPatron();
-    for ( SimpleHeader theHeader : thePatron.getInvoices() )
+    //docMaker.setInstitutionID( "004550164" );
+    //docMaker.setDbBill( "datasource.invoice" );
+    //docMaker.setDbVger( "datasource.oracle" );
+    //thePatron = docMaker.getBasicPatron();
+    /*for ( SimpleHeader theHeader : thePatron.getInvoices() )
     {
       System.out.println(theHeader.getInvoiceNumber() + " : " + theHeader.getBalanceDue());
-    }
+    }*/
 
     /*AddInvoiceProcedure proc;
     InsertHeaderBean bean;
@@ -108,7 +123,7 @@ public class Tester
     catch (SignatureException e)
     {
       e.printStackTrace();
-    }
+    }*/
     AlmaPatron thePatron;
     PatronBean theVger;
     PatronClient client;
@@ -116,7 +131,7 @@ public class Tester
     client = new PatronClient();
     client.setKey("l8xx8cb982c2d4b04ef79375f5c776dbae71");
     client.setUriBase("https://api-na.hosted.exlibrisgroup.com/almaws/v1/users/");
-    client.setUserID("6035136122");
+    client.setUserID("test_ak");
 
     thePatron = client.getThePatron();
     theVger = AlmaVgerConverter.convertPatron(thePatron);
@@ -144,10 +159,10 @@ public class Tester
     for ( Phone thePhone : thePatron.getContactInfo().getPhones() )
     {
       System.out.println( thePhone.getPhoneNumber() + " " + thePhone.isPreferred() );
-    }*/
+    }
 
-    File file;
-    FileOutputStream output;
+    //File file;
+    //FileOutputStream output;
 
     //ByteArrayOutputStream baos;
     /*Document document;
