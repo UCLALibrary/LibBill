@@ -1,23 +1,19 @@
-<!-- #INCLUDE virtual="includes/TopOnly.asp" --> 
+<!-- #INCLUDE virtual="includes/TopOnly.asp" -->
 <%
 
-'session("strBaseURL")="https://webservices.library.ucla.edu/invoicing-test/"
-'session("strBaseHash")="/invoicing-test/"
-
-'session("strBaseURL")="https://webservices.library.ucla.edu/invoicing-dev/"
-'session("strBaseHash")="/invoicing-dev/"
-
-session("strBaseURL")="https://webservices.library.ucla.edu/invoicing/"
-session("strBaseHash")="/invoicing/"
+'Production vs. Test webservices should match prod vs. test UI; use Prod by default.
+'Ignore Dev for now (invoicing-dev for both URL and Hash)
+if Request.ServerVariables("HTTP_HOST") = "invoicing-test.library.ucla.edu" then
+  session("strBaseURL")="https://webservices-test.library.ucla.edu/invoicing-test/"
+  session("strBaseHash")="/invoicing-test/"
+else
+  session("strBaseURL")="https://webservices.library.ucla.edu/invoicing/"
+  session("strBaseHash")="/invoicing/"
+end if
 
 'refuse access (have no userUID; shib problem or timed out
 'or get shib info, and show select unit form (got userUID and no name; authenticated, not logged in)
 'or show main menu (aready have userUID and name; authenticated and logged in)
-
-
-
-
-
 if session("UserUID")="" then
   session("UserUID") = Request.ServerVariables("HTTP_SHIBUCLAUNIVERSITYID")
 end if
@@ -28,11 +24,11 @@ end if
 if session("UserUID")="" then
   'refuse access (timed out or shib problem)
   %>
-  <!-- #INCLUDE virtual="includes/NotAuthenticated.asp" --> 
+  <!-- #INCLUDE virtual="includes/NotAuthenticated.asp" -->
   <%
 else
   %>
-  <!-- #INCLUDE virtual="includes/AppData.asp" --> 
+  <!-- #INCLUDE virtual="includes/AppData.asp" -->
   <!-- #include file = "includes/hex_sha1_js.asp" -->
   <%
 
@@ -46,7 +42,7 @@ else
     'get info w/ ID and ws
 
     hashURL=session("strBaseHash")
-    hashURL=hashURL & "users/user_info/" 
+    hashURL=hashURL & "users/user_info/"
     hashURL=hashURL & strUID
 
     strAuth= "GET" & Chr(10) & hashURL & Chr(10) & "-30-"
@@ -54,14 +50,14 @@ else
     strSig=VAIDKey & ":" & strHash
 
     postURL=session("strBaseURL")
-    postURL=postURL & "users/user_info/" 
+    postURL=postURL & "users/user_info/"
     postURL=postURL & strUID
 
     Set xmlhttp = server.Createobject("MSXML2.XMLHTTP")
     xmlhttp.Open "GET", postUrl, false
     xmlhttp.setRequestHeader "Content-Type","application/xml"
     xmlhttp.setRequestHeader "Authorization", strSig
-    xmlhttp.send 
+    xmlhttp.send
     'Response.write "<p>" & xmlhttp.responsetext
 
     if (xmlhttp.status >= 200) and (xmlhttp.status < 300) then
@@ -109,7 +105,7 @@ else
           strCryptoKey = varCryptoKey.Text
           Set varRole = curitem.selectSingleNode("role")
           strRole = varRole.Text
- 
+
           session("userName")=strUserName
           session("IDKey")=strIDKey
           session("CryptoKey")=strCryptoKey
@@ -119,31 +115,31 @@ else
         if session("role")="admin" then
           session("UnitCode")="AR"
           %>
-          <!-- #INCLUDE virtual="includes/GetVersion.asp" --> 
-          <!-- #INCLUDE virtual="includes/MainMenu.asp" --> 
+          <!-- #INCLUDE virtual="includes/GetVersion.asp" -->
+          <!-- #INCLUDE virtual="includes/MainMenu.asp" -->
           <%
         else
           'show unit list
 
           hashURL=session("strBaseHash")
-          hashURL=hashURL & "branches/unit_list" 
+          hashURL=hashURL & "branches/unit_list"
           strAuth= "GET" & Chr(10) & hashURL & Chr(10) & "-30-"
           strHash = b64_hmac_sha1(session("CryptoKey"), strAuth)
           strSig=session("IDKey") & ":" & strHash
 
           postURL=session("strBaseURL")
-          postURL=postURL & "branches/unit_list" 
+          postURL=postURL & "branches/unit_list"
           Set xmlhttp = server.Createobject("MSXML2.XMLHTTP")
           xmlhttp.Open "GET", postUrl, false
           xmlhttp.setRequestHeader "Content-Type","application/xml"
           xmlhttp.setRequestHeader "Authorization", strSig
-          xmlhttp.send 
+          xmlhttp.send
 
           set xmlDoc = createObject("MSXML2.DOMDocument")
           xmlDoc.async = False
           xmlDoc.setProperty "ServerHTTPRequest", true
           XMLDOC.LOAD(xmlhttp.responsebody)
-          set oNodeList=XMLDoc.documentElement.selectNodes("//units/unit") 
+          set oNodeList=XMLDoc.documentElement.selectNodes("//units/unit")
           Set currNode = oNodeList.nextNode
           Set curitem = oNodeList.Item(i)
 
@@ -201,8 +197,8 @@ end if
 
 
       %>
-      <!-- #INCLUDE virtual="includes/GetVersion.asp" --> 
-      <!-- #INCLUDE virtual="includes/MainMenu.asp" --> 
+      <!-- #INCLUDE virtual="includes/GetVersion.asp" -->
+      <!-- #INCLUDE virtual="includes/MainMenu.asp" -->
       <%
   end if
 end if
