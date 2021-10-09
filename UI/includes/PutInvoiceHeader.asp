@@ -11,12 +11,13 @@ strInput=strInput & "<status>Pending</status>"
 strInput=strInput & "<createdBy>" & strBillerID & "</createdBy>"
 strInput=strInput & "<patronID>" & strPatronID & "</patronID>"
 strInput=strInput & "<onPremises>" & strOnPremises & "</onPremises>"
+strInput=strInput & "<zipCode>" & strZipCode & "</zipCode>"
 strInput=strInput & "</invoice>"
 
-'response.write strInput
+'response.write Server.HTMLEncode(strInput)
 
 hashURL=session("strBaseHash")
-hashURL=hashURL & "invoices/add_invoice" 
+hashURL=hashURL & "invoices/add_invoice"
 
 strCryptoKey=session("CryptoKey")
 strIDKey=session("IDKey")
@@ -25,7 +26,7 @@ strHash = b64_hmac_sha1(strCryptoKey, strAuth)
 strSig=strIDKey & ":" & strHash
 
 postURL=session("strBaseURL")
-postURL=postURL & "invoices/add_invoice" 
+postURL=postURL & "invoices/add_invoice"
 
 Set xmlhttp = server.Createobject("MSXML2.XMLHTTP")
 xmlhttp.Open "PUT", postUrl, false

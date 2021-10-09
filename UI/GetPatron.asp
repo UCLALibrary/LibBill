@@ -1,16 +1,16 @@
-<!-- #INCLUDE virtual="includes/TopOnly.asp" --> 
+<!-- #INCLUDE virtual="includes/TopOnly.asp" -->
 
 <!begin main content>
 
 <%
 if session("userName")="" then
   %>
-  <!-- #INCLUDE virtual="includes/NotAuthenticated.asp" --> 
+  <!-- #INCLUDE virtual="includes/NotAuthenticated.asp" -->
   <%
 else
   %>
-  <!-- #INCLUDE virtual="includes/MainMenu.asp" --> 
-  <!-- #INCLUDE virtual="includes/Functions.asp" --> 
+  <!-- #INCLUDE virtual="includes/MainMenu.asp" -->
+  <!-- #INCLUDE virtual="includes/Functions.asp" -->
   <%
   dim strUnit
   strUnit=session("Unit")
@@ -56,9 +56,12 @@ else
     <form method="post" autocomplete="off" action="GetPatron.asp">
     Enter Library Card Barcode<br>
     <input name="txtBarcode" type="text" length="20" value="<%=strSearch1%>"><br>
+    <!--
+    'Disable patron name search 20211007 akohler
     <b>OR</b> </br>Enter Name String (First and/or Last)</br>First:
     <input name="txtUserNameFirst" type="text" length="20" value="">&nbsp;Last:&nbsp;
     <input name="txtUserNameLast" type="text" length="20" value="">
+    -->
     <input type="submit" value="Search">
     </form>
   <%
@@ -67,9 +70,12 @@ else
   <form method="post" autocomplete="off" action="GetPatron.asp">
     Enter Library Card Barcode<br>
     <input name="txtBarcode" type="text" length="20" value="<%=strSearch1%>"><br>
+    <!--
+    'Disable patron name search 20211007 akohler
     <b>OR</b> </br>Enter Name String (First and/or Last)</br>First:
     <input name="txtUserNameFirst" type="text" length="20" value="<%=strSearch2%>">&nbsp;Last:&nbsp;
     <input name="txtUserNameLast" type="text" length="20" value="<%=strSearch3%>">
+    -->
     <input type="submit" value="Search">
   </form>
   <%
@@ -92,7 +98,8 @@ else
     <%
 
     hashURL=session("strBaseHash")
-    hashURL=hashURL & "patrons/patron_record/" & strSearch1
+    ''AK''hashURL=hashURL & "patrons/patron_record/" & strSearch1
+    hashURL=hashURL & "patrons/alma/" & strSearch1
 
     strCryptoKey=session("CryptoKey")
     strIDKey=session("IDKey")
@@ -101,29 +108,20 @@ else
     strSig=strIDKey & ":" & strHash
 
     postURL=session("strBaseURL")
-    postURL=postURL & "patrons/patron_record/" & strSearch1
-
-
-'response.write strCryptoKey & ","
-'response.write strIDKey
+    ''AK''postURL=postURL & "patrons/patron_record/" & strSearch1
+    postURL=postURL & "patrons/alma/" & strSearch1
 
     Set xmlhttp = server.Createobject("MSXML2.XMLHTTP")
     xmlhttp.Open "GET", postUrl, false
     xmlhttp.setRequestHeader "Content-Type","application/xml"
     xmlhttp.setRequestHeader "Authorization", strSig
-    xmlhttp.send 
-    'Response.write "<p>" & xmlhttp.responsetext
+    xmlhttp.send
     if (xmlhttp.status >= 200) and (xmlhttp.status < 300) then
       'response.write "<p>Got user info:</p>"
     else
-
-      if xmlhttp.status = 500 then
-      else
-        response.write "<p>" & xmlhttp.status
-        strError=xmlhttp.responsetext
-        response.write "<p>Status: " & strError & "</p>"
-
-      end if
+      response.write "<p>Status: " & xmlhttp.status & "</p>"
+      strError=xmlhttp.responsetext
+      response.write "<p>Text: " & strError & "</p>"
     end if
 
     Response.Write "<p>Results: </p>"
@@ -154,6 +152,8 @@ else
         strUCMember = varUCMember.Text
         Set varInstitutionID = curitem.selectSingleNode("institutionID")
         strInstitutionID = varInstitutionID.Text
+        Set varZipCode = curitem.selectSingleNode("permZip")
+        strZipCode = varZipCode.Text
         %>
         <p>
         <%
@@ -166,7 +166,6 @@ else
 
         if session("role")="invoice_preparer" or session("role")="invoice_prep_app" or session("role")="OMNITEST" then
         %>
-
           <form action="AddInvoice.asp" method="post">
           <input type="hidden" name="txtID" value="<%=strID%>">
           <input type="hidden" name="txtBarcode" value="<%=strSearch1%>">
@@ -176,6 +175,7 @@ else
           <input type="hidden" name="txtBillerID" value="<%=strBillerID%>">
           <input type="hidden" name="txtUCMember" value="<%=strUCMember%>">
           <input type="hidden" name="txtInstitutionID" value="<%=strInstitutionID%>">
+          <input type="hidden" name="txtZipCode" value="<%=strZipCode%>">
           <input type="submit" value="Create Invoice">
           </form>
         <%
@@ -258,7 +258,7 @@ else
       xmlhttp.Open "GET", postUrl, false
       xmlhttp.setRequestHeader "Content-Type","application/xml"
       xmlhttp.setRequestHeader "Authorization", strSig
-      xmlhttp.send 
+      xmlhttp.send
       'Response.write "<p>" & xmlhttp.responsetext
       if (xmlhttp.status >= 200) and (xmlhttp.status < 300) then
         'response.write "<p>Got user info:</p>"
@@ -281,8 +281,8 @@ else
         'response.write "handle the parsing error..."
          response.write "handle the parsing error..." & xmlDoc.parseError.errorCode & "</p>"
      End If
- 
-      set oNodeList=XMLDoc.documentElement.selectNodes("//patronList/patron") 
+
+      set oNodeList=XMLDoc.documentElement.selectNodes("//patronList/patron")
       Set currNode = oNodeList.nextNode
       Set curitem = oNodeList.Item(i)
 
@@ -299,7 +299,7 @@ else
       end if
     Else
       if strSearch2="" and strSearch1="" then
-      else 
+      else
         response.write "<p class=ErrorMessage>Name Search string must be 2 or more characters with no blank spaces in last or first name...</p>"
       end if
     End if
