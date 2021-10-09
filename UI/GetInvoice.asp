@@ -1,6 +1,6 @@
 <html>
 <head>
-<script language="javascript" 
+<script language="javascript"
   type="text/javascript">
 
 <!-- hide script from older browsers
@@ -17,11 +17,11 @@ return false;
 }
  stop hiding script -->
 </script>
- 
+
 </head>
 <body>
 
-<!-- #INCLUDE virtual="includes/TopOnly.asp" --> 
+<!-- #INCLUDE virtual="includes/TopOnly.asp" -->
 
 <!begin main content>
 
@@ -30,11 +30,11 @@ return false;
 
 if not session("userName")="" then 'USER IS LOGGED IN...
   %>
-  <!-- #INCLUDE virtual="includes/MainMenu.asp" --> 
+  <!-- #INCLUDE virtual="includes/MainMenu.asp" -->
   <%
 
   %>
-  <!-- #INCLUDE virtual="includes/Functions.asp" --> 
+  <!-- #INCLUDE virtual="includes/Functions.asp" -->
   <%
 '  dim vArrPassThrough(10)
   dim strBillerID
@@ -49,6 +49,7 @@ if not session("userName")="" then 'USER IS LOGGED IN...
   strAction=request("action")
 
   strOnPremises=request("txtOnPremises")
+  strZipCode=request("txtZipCode")
 
   strDate=request("txtDate")
   strInvoiceAmount=request("txtInvoiceAmount")
@@ -62,95 +63,95 @@ if not session("userName")="" then 'USER IS LOGGED IN...
   select case strAction
     case "MailPDF"
       %>
-      <!-- #INCLUDE virtual="includes/MailPDF.asp" --> 
+      <!-- #INCLUDE virtual="includes/MailPDF.asp" -->
       <%
     case "addInvoice"
       %>
-      <!-- #INCLUDE virtual="includes/PutInvoiceHeader.asp" --> 
+      <!-- #INCLUDE virtual="includes/PutInvoiceHeader.asp" -->
       <%
     case "addDeposit"
       %>
-      <!-- #INCLUDE virtual="includes/AddDeposit.asp" --> 
+      <!-- #INCLUDE virtual="includes/AddDeposit.asp" -->
       <%
     case "addPayment"
       %>
-      <!-- #INCLUDE virtual="includes/AddPayment.asp" --> 
+      <!-- #INCLUDE virtual="includes/AddPayment.asp" -->
       <%
     case "addPaymentInFull"
       %>
-      <!-- #INCLUDE virtual="includes/AddPaymentInFull.asp" --> 
+      <!-- #INCLUDE virtual="includes/AddPaymentInFull.asp" -->
       <%
     case "updateItem"
       %>
-      <!-- #INCLUDE virtual="includes/updateItem.asp" --> 
+      <!-- #INCLUDE virtual="includes/updateItem.asp" -->
       <%
     case "updateInvoice"
       %>
-      <!-- #INCLUDE virtual="includes/UpdateInvoice.asp" --> 
+      <!-- #INCLUDE virtual="includes/UpdateInvoice.asp" -->
       <%
     case "addItem"
       %>
-      <!-- #INCLUDE virtual="includes/AddItem.asp" --> 
+      <!-- #INCLUDE virtual="includes/AddItem.asp" -->
       <%
     case "DeleteLineItem"
       %>
-      <!-- #INCLUDE virtual="includes/DeleteLineItem.asp" --> 
+      <!-- #INCLUDE virtual="includes/DeleteLineItem.asp" -->
       <%
     case "UpdateLineItemNote"
       %>
-      <!-- #INCLUDE virtual="includes/UpdateLineItemNote.asp" --> 
+      <!-- #INCLUDE virtual="includes/UpdateLineItemNote.asp" -->
       <%
     case "DeleteLineItemNote"
       %>
-      <!-- #INCLUDE virtual="includes/DeleteLineItemNote.asp" --> 
+      <!-- #INCLUDE virtual="includes/DeleteLineItemNote.asp" -->
       <%
     case "AddLineItemNote"
       %>
-      <!-- #INCLUDE virtual="includes/AddItemNote.asp" --> 
+      <!-- #INCLUDE virtual="includes/AddItemNote.asp" -->
       <%
     case "UpdateInvoiceNote"
       %>
-      <!-- #INCLUDE virtual="includes/UpdateInvoiceNote.asp" --> 
+      <!-- #INCLUDE virtual="includes/UpdateInvoiceNote.asp" -->
       <%
     case "DeleteInvoiceNote"
       %>
-      <!-- #INCLUDE virtual="includes/DeleteInvoiceNote.asp" --> 
+      <!-- #INCLUDE virtual="includes/DeleteInvoiceNote.asp" -->
       <%
     case "AddInvoiceNote"
       %>
-      <!-- #INCLUDE virtual="includes/AddInvoiceNote.asp" --> 
+      <!-- #INCLUDE virtual="includes/AddInvoiceNote.asp" -->
       <%
     case "addAdjustment"
       %>
-      <!-- #INCLUDE virtual="includes/AddAdjustment.asp" --> 
+      <!-- #INCLUDE virtual="includes/AddAdjustment.asp" -->
       <%
     case "AdjInv"
       %>
-      <!-- #INCLUDE virtual="includes/adjustInvoice.asp" --> 
+      <!-- #INCLUDE virtual="includes/adjustInvoice.asp" -->
       <%
   end select
 
 
   if request("Search")="InvoiceNum" or request("Search")="" then
     %>
-    <!-- #INCLUDE virtual="includes/InvoiceSearchForm.asp" --> 
+    <!-- #INCLUDE virtual="includes/InvoiceSearchForm.asp" -->
     <%
   else
     %>
-    <!-- #INCLUDE virtual="includes/InvoiceSearchFormAdvanced.asp" --> 
+    <!-- #INCLUDE virtual="includes/InvoiceSearchFormAdvanced.asp" -->
     <%
   end if
 
 
   if request("action")<>"" then
-    if strInvoiceNum<>"" and len(trim(strInvoiceNum))<>8 then 
+    if strInvoiceNum<>"" and len(trim(strInvoiceNum))<>8 then
 
       response.write "<p class=ErrorMessage>Invoice Numbers must be 8 characters long...</p>"
     else
       if strInvoiceNum="" then
         else
         %>
-        <!-- #INCLUDE virtual="includes/GetInvoiceXML.asp" --> 
+        <!-- #INCLUDE virtual="includes/GetInvoiceXML.asp" -->
         <%
       end if
     end if
@@ -158,14 +159,14 @@ if not session("userName")="" then 'USER IS LOGGED IN...
   end if
 
   if request("Search")="InvoiceNum" then
-    if strInvoiceNum<>"" and len(trim(strInvoiceNum))<>8 then 
+    if strInvoiceNum<>"" and len(trim(strInvoiceNum))<>8 then
 
       response.write "<p class=ErrorMessage>Invoice Numbers must be 8 characters long...</p>"
     else
       if strInvoiceNum="" then
         else
         %>
-        <!-- #INCLUDE virtual="includes/GetInvoiceXML.asp" --> 
+        <!-- #INCLUDE virtual="includes/GetInvoiceXML.asp" -->
         <%
       end if
     end if
@@ -178,7 +179,7 @@ if not session("userName")="" then 'USER IS LOGGED IN...
     if strInvoiceAmount<>"" and isnumeric(strInvoiceAmount) then
       'response.write "amount search..."
         %>
-        <!-- #INCLUDE virtual="includes/GetInvoicesByAmount.asp" --> 
+        <!-- #INCLUDE virtual="includes/GetInvoicesByAmount.asp" -->
         <%
     else
       response.write "<p class=ErrorMessage>Amount must be a number...</p>"
@@ -192,7 +193,7 @@ if not session("userName")="" then 'USER IS LOGGED IN...
     if strInvoiceAmount1<>"" and strInvoiceAmount2<>"" and isnumeric(strInvoiceAmount1) and isnumeric(strInvoiceAmount2) then
       'response.write "amount search..."
         %>
-        <!-- #INCLUDE virtual="includes/GetInvoicesByAmountRange.asp" --> 
+        <!-- #INCLUDE virtual="includes/GetInvoicesByAmountRange.asp" -->
         <%
     else
       response.write "<p class=ErrorMessage>Amount must be a number...</p>"
@@ -205,7 +206,7 @@ if not session("userName")="" then 'USER IS LOGGED IN...
     if strInvoiceNote<>"" then
       'response.write "invoice note search..."
         %>
-        <!-- #INCLUDE virtual="includes/GetInvoicesByNote.asp" --> 
+        <!-- #INCLUDE virtual="includes/GetInvoicesByNote.asp" -->
         <%
     else
       response.write "<p class=ErrorMessage>The note string was empty...</p>"
@@ -218,7 +219,7 @@ if not session("userName")="" then 'USER IS LOGGED IN...
     if strLineNote<>"" then
       'response.write "line note search..."
         %>
-        <!-- #INCLUDE virtual="includes/GetInvoicesByLineNote.asp" --> 
+        <!-- #INCLUDE virtual="includes/GetInvoicesByLineNote.asp" -->
         <%
     else
       response.write "<p class=ErrorMessage>The note string was empty...</p>"
@@ -231,7 +232,7 @@ if not session("userName")="" then 'USER IS LOGGED IN...
     if strDate<>"" then
       'response.write "invoice date note search..."
         %>
-        <!-- #INCLUDE virtual="includes/GetInvoicesByDate.asp" --> 
+        <!-- #INCLUDE virtual="includes/GetInvoicesByDate.asp" -->
         <%
     else
       response.write "<p class=ErrorMessage>The date string was empty...</p>"
@@ -245,7 +246,7 @@ if not session("userName")="" then 'USER IS LOGGED IN...
     if strDate<>"" or strDate2="" then
       'response.write "invoice date note search..."
         %>
-        <!-- #INCLUDE virtual="includes/GetInvoicesByDateRange.asp" --> 
+        <!-- #INCLUDE virtual="includes/GetInvoicesByDateRange.asp" -->
         <%
     else
       response.write "<p class=ErrorMessage>The date string was empty...</p>"
@@ -259,9 +260,9 @@ if not session("userName")="" then 'USER IS LOGGED IN...
 
 else 'USER IS NOT LOGGED IN, SO...
   %>
-  <!-- #INCLUDE virtual="includes/NotAuthenticated.asp" --> 
+  <!-- #INCLUDE virtual="includes/NotAuthenticated.asp" -->
   <%
-end if 
+end if
 
 
 %>

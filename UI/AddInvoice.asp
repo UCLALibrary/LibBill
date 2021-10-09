@@ -1,11 +1,11 @@
-<!-- #INCLUDE virtual="includes/TopOnly.asp" --> 
+<!-- #INCLUDE virtual="includes/TopOnly.asp" -->
 
 <!begin main content>
 
 <%
 if session("userName")="" then
   %>
-  <!-- #INCLUDE virtual="includes/NotAuthenticated.asp" --> 
+  <!-- #INCLUDE virtual="includes/NotAuthenticated.asp" -->
   <%
 else
 
@@ -16,9 +16,10 @@ else
   strUnit=request("txtUnit")
   strBillerID=request("txtBillerID")
   strUCMember=request("txtUCMember")
+  strZipCode=request("txtZipCode")
 
   %>
-  <!-- #INCLUDE virtual="includes/MainMenu.asp" --> 
+  <!-- #INCLUDE virtual="includes/MainMenu.asp" -->
   <hr>
   <p>Add Invoice For:
   <%
@@ -38,6 +39,7 @@ else
   <input type="hidden" name="txtUnit" value="<%=strUnit%>">
   <input type="hidden" name="txtBillerID" value="<%=strBillerID%>">
   <input type="hidden" name="txtUCMember" value="<%=strUCMember%>">
+  <input type="hidden" name="txtZipCode" value="<%=strZipCode%>">
   </p><p>
   <input type="submit" value="Create Invoice">
   </form>
