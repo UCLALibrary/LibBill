@@ -105,6 +105,7 @@ public class AddInvoiceProcedure
     input.put( "p_user_name", data.getCreatedBy() );
     input.put( "p_patron_id", data.getPatronID() );
     input.put( "p_patron_on_premises", data.getOnPremises() );
+    System.out.println("zip = " + data.getZipCode());
     input.put( "p_patron_zip_code", data.getZipCode() );
     input.put( "p_new_invoice_number", invoiceNumber );
 

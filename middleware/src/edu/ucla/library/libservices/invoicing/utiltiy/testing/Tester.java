@@ -78,7 +78,7 @@ public class Tester
       System.out.println(theHeader.getInvoiceNumber() + " : " + theHeader.getBalanceDue());
     }*/
 
-    /*AddInvoiceProcedure proc;
+    AddInvoiceProcedure proc;
     InsertHeaderBean bean;
     String invNo;
 
@@ -89,14 +89,14 @@ public class Tester
     bean.setOnPremises("Y");
     bean.setPatronID("903369608");
     bean.setStatus("Pending");
-    bean.setZipCode("90042");
+    //bean.setZipCode("90042");
 
     proc = new AddInvoiceProcedure();
 
     proc.setData( bean );
     proc.setDbName( "datasource.invoice" );
     invNo = proc.addInvoice();
-    System.out.println(invNo);*/
+    System.out.println(invNo);
 
     /*InvoiceGenerator generator;
 
@@ -123,7 +123,7 @@ public class Tester
     catch (SignatureException e)
     {
       e.printStackTrace();
-    }*/
+    }
     AlmaPatron thePatron;
     PatronBean theVger;
     PatronClient client;
