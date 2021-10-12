@@ -54,7 +54,7 @@ else
   if strSearch1<>"" then
     %>
     <form method="post" autocomplete="off" action="GetPatron.asp">
-    Enter Library Card Barcode<br>
+    Enter Barcode or Alma Primary ID<br>
     <input name="txtBarcode" type="text" length="20" value="<%=strSearch1%>"><br>
     <!--
     'Disable patron name search 20211007 akohler
@@ -68,7 +68,7 @@ else
   else
   %>
   <form method="post" autocomplete="off" action="GetPatron.asp">
-    Enter Library Card Barcode<br>
+    Enter Barcode or Alma Primary ID<br>
     <input name="txtBarcode" type="text" length="20" value="<%=strSearch1%>"><br>
     <!--
     'Disable patron name search 20211007 akohler
