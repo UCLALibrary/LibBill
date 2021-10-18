@@ -29,7 +29,7 @@ public class RequestWrapper
     if ( bytes == null )
     { // first time
       InputStream in = super.getRequest().getInputStream();
-      bytes = new byte[ super.getRequest().getContentLength() ];
+      bytes = new byte[ super.getRequest().getContentLength() < 0 ? 0 : super.getRequest().getContentLength() ];
       for ( int r, offset = 0;
             ( r = in.read( bytes, offset, bytes.length - offset ) ) > -1; )
       {
