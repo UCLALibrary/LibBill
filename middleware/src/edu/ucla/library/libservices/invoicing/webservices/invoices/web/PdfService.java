@@ -58,6 +58,8 @@ public class PdfService
       generator = new PdfGenerator();
       generator.setInvoiceNumber( invoiceNo );
       generator.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+      generator.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
+      generator.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
 
       PdfWriter.getInstance( document, baos );
       generator.populatePdf( document, uid );
@@ -85,6 +87,8 @@ public class PdfService
       generator = new PdfGenerator();
       generator.setInvoiceNumber( invoiceNo ); 
       generator.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
+      generator.setAlmaKey(config.getServletContext().getInitParameter( "alma.key" ));
+      generator.setAlmaURI(config.getServletContext().getInitParameter( "alma.patron" ));
 
       fileName =
           new StringBuffer( config.getServletContext().getInitParameter( "mail.filebase" ) ).append( invoiceNo ).append( ".pdf" );

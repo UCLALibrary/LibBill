@@ -72,6 +72,7 @@ public class PatronClient
       {
         thePatron = new AlmaPatron();
         thePatron.setFirstName("NOT_FOUND");
+        thePatron.setPatronID(" ");
       }
     }
     return thePatron;
