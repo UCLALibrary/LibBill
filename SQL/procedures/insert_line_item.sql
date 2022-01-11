@@ -4,6 +4,7 @@ create or replace procedure insert_line_item (
 , p_user_name in staff_user.user_name%type
 , p_quantity in line_item.quantity%type
 , p_unit_price in line_item.unit_price%type := 0
+, p_is_uc_member in char
 ) as
   v_total_price line_item.total_price%type;
   v_unit_price line_item.unit_price%type;
@@ -37,7 +38,7 @@ begin
     if p_unit_price != 0 then
       raise_application_error(application_errors.INVALID_DATA, 'Client should not provide price');
     else
-      v_unit_price := get_price_for_service(p_invoice_number, p_location_service_id);
+      v_unit_price := get_price_for_service(p_invoice_number, p_location_service_id, p_is_uc_member);
     end if;
   end if;
   
