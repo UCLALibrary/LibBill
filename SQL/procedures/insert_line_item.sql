@@ -3,8 +3,8 @@ create or replace procedure insert_line_item (
 , p_location_service_id in line_item.location_service_id%type
 , p_user_name in staff_user.user_name%type
 , p_quantity in line_item.quantity%type
-, p_unit_price in line_item.unit_price%type := 0
 , p_is_uc_member in char
+, p_unit_price in line_item.unit_price%type := 0
 ) as
   v_total_price line_item.total_price%type;
   v_unit_price line_item.unit_price%type;

@@ -4,8 +4,8 @@ create or replace procedure update_line_item (
 , p_location_service_id in line_item.location_service_id%type
 , p_quantity in line_item.quantity%type
 , p_user_name in staff_user.user_name%type
-, p_unit_price in line_item.unit_price%type := 0
 , p_is_uc_member in char
+, p_unit_price in line_item.unit_price%type := 0
 ) as
   rows_updated int := 0;
   v_require_custom_price location_service.require_custom_price%type;
