@@ -56,8 +56,8 @@ public class AddLineItemProcedure
 
   private void makeConnection()
   {
-    ds = DataSourceFactory.createDataSource( getDbName() );
-    //ds = DataSourceFactory.createBillSource();
+    //ds = DataSourceFactory.createDataSource( getDbName() );
+    ds = DataSourceFactory.createBillSource();
   }
 
   public void addLineItem()
@@ -74,7 +74,7 @@ public class AddLineItemProcedure
     setDataSource( ds );
     setFunction( false );
     //setSql( "invoice_owner.insert_line_item" );
-    setSql( "insert_line_item" );
+    setSql( "invoice_owner_test.insert_line_item" );
     declareParameter( new SqlParameter( "p_invoice_number",
                                         Types.VARCHAR ) );
     declareParameter( new SqlParameter( "p_location_service_id",
@@ -83,6 +83,7 @@ public class AddLineItemProcedure
     declareParameter( new SqlParameter( "p_quantity", Types.NUMERIC ) );
     if ( data.getUnitPrice() != 0D )
       declareParameter( new SqlParameter( "p_unit_price", Types.NUMERIC ) );
+    declareParameter( new SqlParameter( "p_is_uc_member", Types.CHAR ) );
     compile();
   }
 
@@ -100,6 +101,7 @@ public class AddLineItemProcedure
     input.put( "p_quantity", data.getQuantity() );
     if ( data.getUnitPrice() != 0D )
       input.put( "p_unit_price", data.getUnitPrice() );
+    input.put( "p_is_uc_member", data.getUcMember() );
 
     out = execute( input );
 

@@ -29,6 +29,8 @@ public class LineItemBean
   @XmlElement( name = "createdDate", required = false )
   @XmlJavaTypeAdapter( DateAdapter.class )
   private Date createdDate;
+  @XmlElement( name = "ucMember" )
+  private String ucMember;
 
   public LineItemBean()
   {
@@ -103,5 +105,15 @@ public class LineItemBean
   public Date getCreatedDate()
   {
     return createdDate;
+  }
+
+  public void setUcMember(String ucMember)
+  {
+    this.ucMember = ucMember.toUpperCase();
+  }
+
+  public String getUcMember()
+  {
+    return ucMember.toUpperCase();
   }
 }

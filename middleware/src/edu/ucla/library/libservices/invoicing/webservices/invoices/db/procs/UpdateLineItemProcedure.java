@@ -80,6 +80,7 @@ public class UpdateLineItemProcedure
     if ( data.getUnitPrice() != 0D )
       declareParameter( new SqlParameter( "p_unit_price",
                                           Types.NUMERIC ) );
+    declareParameter( new SqlParameter( "p_is_uc_member", Types.VARCHAR ) );
     compile();
   }
 
@@ -98,6 +99,7 @@ public class UpdateLineItemProcedure
     input.put( "p_user_name", getData().getCreatedBy() );
     if ( data.getUnitPrice() != 0D )
       input.put( "p_unit_price", getData().getUnitPrice() );
+    input.put( "p_is_uc_member", data.getUcMember() );
 
     out = execute( input );
 
