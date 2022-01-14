@@ -6,7 +6,6 @@ strUnitCode=left(strInvoiceNum,2)
 %>
 <!-- #include virtual = "/includes/hex_sha1_js.asp" -->
 <%
-
 if strHasLineItem="Yes" then
   hashURL=session("strBaseHash")
   hashURL=hashURL & "branches/branch_services/" & lcase(strUnitCode) & "/for_uc/" & strUCMember & "/code/" & stritemcode

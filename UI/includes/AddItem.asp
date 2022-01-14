@@ -102,10 +102,10 @@ if strAbort<>"Y" then
   if strRequireCustomPrice="T" then
     strInput=strInput & "<unitPrice>" & strunitPrice & "</unitPrice>"
   end if
+  strInput=strInput & "<ucMember>" & strUCMember & "</ucMember>"
   strInput=strInput & "<createdBy>" & strBillerID & "</createdBy>"
   strInput=strInput & "</lineItem>"
 
-  'response.write "<p>" & strinput & "</p>"
 
 hashURL=session("strBaseHash")
 hashURL=hashURL & "invoices/add_line_item" 

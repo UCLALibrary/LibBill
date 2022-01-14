@@ -15,7 +15,8 @@ else
   strNameFirst=request("txtNameFirst")
   strUnit=request("txtUnit")
   strBillerID=request("txtBillerID")
-  strUCMember=request("txtUCMember")
+  'strUCMember=request("txtUCMember")
+  strUCMember = session("UCMember")
   strZipCode=request("txtZipCode")
 
   %>

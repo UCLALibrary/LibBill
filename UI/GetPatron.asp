@@ -149,7 +149,9 @@ else
 '        Set varPatronNameFirst = curitem.selectSingleNode("firstName")
 '        strNameFirst = varPatronNameFirst.Text
         Set varUCMember = curitem.selectSingleNode("ucMember")
-        strUCMember = varUCMember.Text
+        ' Store this as a session variable since used many places, but only set here by call to patrons/alma
+        session("UCMember") = varUCMember.Text
+        strUCMember = session("UCMember")
         Set varInstitutionID = curitem.selectSingleNode("institutionID")
         strInstitutionID = varInstitutionID.Text
         Set varZipCode = curitem.selectSingleNode("permZip")

@@ -80,10 +80,9 @@ else
   else
     strInput=strInput & "<unitPrice></unitPrice>"
   end if
+  strInput=strInput & "<ucMember>" & strUCMember & "</ucMember>"
   strInput=strInput & "<createdBy>" & strBillerID & "</createdBy>"
   strInput=strInput & "</lineItem>"
-
-'response.write "strInput: " &strInput
 
   hashURL=session("strBaseHash")
   hashURL=hashURL & "invoices/edit_line_item" 
