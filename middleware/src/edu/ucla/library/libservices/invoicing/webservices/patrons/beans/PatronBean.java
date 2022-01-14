@@ -14,68 +14,68 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlType //(propOrder={"patronID", "barcode" , "lastName", "firstName" })
-@XmlAccessorType( XmlAccessType.FIELD )
+@XmlAccessorType(XmlAccessType.FIELD)
 public class PatronBean
 {
-  @XmlElement( name = "patronID" ) //, nillable = true )
+  @XmlElement(name = "patronID") //, nillable = true )
   private String patronID;
-  @XmlElement( name = "barcode" ) //, nillable = true )
+  @XmlElement(name = "barcode") //, nillable = true )
   private String barcode;
-  @XmlElement( name = "lastName" ) //, nillable = true )
+  @XmlElement(name = "lastName") //, nillable = true )
   private String lastName;
-  @XmlElement( name = "firstName" ) //, nillable = true )
+  @XmlElement(name = "firstName") //, nillable = true )
   private String firstName;
-  @XmlElement( name = "permAddress1" ) //, nillable = true )
+  @XmlElement(name = "permAddress1") //, nillable = true )
   private String permAddress1;
-  @XmlElement( name = "permAddress2" ) //, nillable = true )
+  @XmlElement(name = "permAddress2") //, nillable = true )
   private String permAddress2;
-  @XmlElement( name = "permAddress3" ) //, nillable = true )
+  @XmlElement(name = "permAddress3") //, nillable = true )
   private String permAddress3;
-  @XmlElement( name = "permAddress4" ) //, nillable = true )
+  @XmlElement(name = "permAddress4") //, nillable = true )
   private String permAddress4;
-  @XmlElement( name = "permAddress5" ) //, nillable = true )
+  @XmlElement(name = "permAddress5") //, nillable = true )
   private String permAddress5;
-  @XmlElement( name = "permCity" ) //, nillable = true )
+  @XmlElement(name = "permCity") //, nillable = true )
   private String permCity;
-  @XmlElement( name = "permState" ) //, nillable = true )
+  @XmlElement(name = "permState") //, nillable = true )
   private String permState;
-  @XmlElement( name = "permZip" ) //, nillable = true )
+  @XmlElement(name = "permZip") //, nillable = true )
   private String permZip;
-  @XmlElement( name = "permCountry" ) //, nillable = true )
+  @XmlElement(name = "permCountry") //, nillable = true )
   private String permCountry;
-  @XmlElement( name = "localAddress1" ) //, nillable = true )
+  @XmlElement(name = "localAddress1") //, nillable = true )
   private String localAddress1;
-  @XmlElement( name = "localAddress2" ) //, nillable = true )
+  @XmlElement(name = "localAddress2") //, nillable = true )
   private String localAddress2;
-  @XmlElement( name = "localAddress3" ) //, nillable = true )
+  @XmlElement(name = "localAddress3") //, nillable = true )
   private String localAddress3;
-  @XmlElement( name = "localAddress4" ) //, nillable = true )
+  @XmlElement(name = "localAddress4") //, nillable = true )
   private String localAddress4;
-  @XmlElement( name = "localAddress5" ) //, nillable = true )
+  @XmlElement(name = "localAddress5") //, nillable = true )
   private String localAddress5;
-  @XmlElement( name = "localCity" ) //, nillable = true )
+  @XmlElement(name = "localCity") //, nillable = true )
   private String localCity;
-  @XmlElement( name = "localState" ) //, nillable = true )
+  @XmlElement(name = "localState") //, nillable = true )
   private String localState;
-  @XmlElement( name = "localZip" ) //, nillable = true )
+  @XmlElement(name = "localZip") //, nillable = true )
   private String localZip;
-  @XmlElement( name = "localCountry" ) //, nillable = true )
+  @XmlElement(name = "localCountry") //, nillable = true )
   private String localCountry;
-  @XmlElement( name = "ucMember" ) //, nillable = true )
-  private boolean isUC;
-  @XmlElement( name = "email" ) //, nillable = true )
+  @XmlElement(name = "ucMember") //, nillable = true )
+  private String isUC;
+  @XmlElement(name = "email") //, nillable = true )
   private String email;
-  @XmlElement( name = "institutionID" )
+  @XmlElement(name = "institutionID")
   private String institutionID;
-  @XmlElement( name = "tempEffectdate" )
-  @XmlJavaTypeAdapter( DateAdapter.class )
+  @XmlElement(name = "tempEffectdate")
+  @XmlJavaTypeAdapter(DateAdapter.class)
   private Date tempEffectdate;
-  @XmlElement( name = "tempExpireDate" )
-  @XmlJavaTypeAdapter( DateAdapter.class )
+  @XmlElement(name = "tempExpireDate")
+  @XmlJavaTypeAdapter(DateAdapter.class)
   private Date tempExpireDate;
-  @XmlElement( name = "phoneNumber" )
+  @XmlElement(name = "phoneNumber")
   private String phoneNumber;
-  @XmlElement( name = "primaryID" )
+  @XmlElement(name = "primaryID")
   private String primaryID;
 
   public PatronBean()
@@ -83,7 +83,7 @@ public class PatronBean
     super();
   }
 
-  public void setPatronID( String patronID )
+  public void setPatronID(String patronID)
   {
     this.patronID = patronID;
   }
@@ -93,11 +93,9 @@ public class PatronBean
     return patronID;
   }
 
-  public void setBarcode( String barcode )
+  public void setBarcode(String barcode)
   {
-    this.barcode =
-        ( !ContentTests.isEmpty( barcode ) ? StringCleaner.removeControlChars( barcode ):
-          "" );
+    this.barcode = (!ContentTests.isEmpty(barcode)? StringCleaner.removeControlChars(barcode): "");
   }
 
   public String getBarcode()
@@ -105,11 +103,9 @@ public class PatronBean
     return barcode;
   }
 
-  public void setLastName( String lastName )
+  public void setLastName(String lastName)
   {
-    this.lastName =
-        ( !ContentTests.isEmpty( lastName ) ? StringCleaner.removeControlChars( lastName ):
-          "" );
+    this.lastName = (!ContentTests.isEmpty(lastName)? StringCleaner.removeControlChars(lastName): "");
   }
 
   public String getLastName()
@@ -117,11 +113,9 @@ public class PatronBean
     return lastName;
   }
 
-  public void setFirstName( String firstName )
+  public void setFirstName(String firstName)
   {
-    this.firstName =
-        ( !ContentTests.isEmpty( firstName ) ? StringCleaner.removeControlChars( firstName ):
-          "" );
+    this.firstName = (!ContentTests.isEmpty(firstName)? StringCleaner.removeControlChars(firstName): "");
   }
 
   public String getFirstName()
@@ -129,11 +123,9 @@ public class PatronBean
     return firstName;
   }
 
-  public void setPermAddress1( String permAddress1 )
+  public void setPermAddress1(String permAddress1)
   {
-    this.permAddress1 =
-        ( !ContentTests.isEmpty( permAddress1 ) ? StringCleaner.removeControlChars( permAddress1 ):
-          "" );
+    this.permAddress1 = (!ContentTests.isEmpty(permAddress1)? StringCleaner.removeControlChars(permAddress1): "");
   }
 
   public String getPermAddress1()
@@ -141,11 +133,9 @@ public class PatronBean
     return permAddress1;
   }
 
-  public void setPermAddress2( String permAddress2 )
+  public void setPermAddress2(String permAddress2)
   {
-    this.permAddress2 =
-        ( !ContentTests.isEmpty( permAddress2 ) ? StringCleaner.removeControlChars( permAddress2 ):
-          "" );
+    this.permAddress2 = (!ContentTests.isEmpty(permAddress2)? StringCleaner.removeControlChars(permAddress2): "");
   }
 
   public String getPermAddress2()
@@ -153,11 +143,9 @@ public class PatronBean
     return permAddress2;
   }
 
-  public void setPermAddress3( String permAddress3 )
+  public void setPermAddress3(String permAddress3)
   {
-    this.permAddress3 =
-        ( !ContentTests.isEmpty( permAddress3 ) ? StringCleaner.removeControlChars( permAddress3 ):
-          "" );
+    this.permAddress3 = (!ContentTests.isEmpty(permAddress3)? StringCleaner.removeControlChars(permAddress3): "");
   }
 
   public String getPermAddress3()
@@ -165,11 +153,9 @@ public class PatronBean
     return permAddress3;
   }
 
-  public void setPermAddress4( String permAddress4 )
+  public void setPermAddress4(String permAddress4)
   {
-    this.permAddress4 =
-        ( !ContentTests.isEmpty( permAddress4 ) ? StringCleaner.removeControlChars( permAddress4 ):
-          "" );
+    this.permAddress4 = (!ContentTests.isEmpty(permAddress4)? StringCleaner.removeControlChars(permAddress4): "");
   }
 
   public String getPermAddress4()
@@ -177,11 +163,9 @@ public class PatronBean
     return permAddress4;
   }
 
-  public void setPermAddress5( String permAddress5 )
+  public void setPermAddress5(String permAddress5)
   {
-    this.permAddress5 =
-        ( !ContentTests.isEmpty( permAddress5 ) ? StringCleaner.removeControlChars( permAddress5 ):
-          "" );
+    this.permAddress5 = (!ContentTests.isEmpty(permAddress5)? StringCleaner.removeControlChars(permAddress5): "");
   }
 
   public String getPermAddress5()
@@ -189,11 +173,9 @@ public class PatronBean
     return permAddress5;
   }
 
-  public void setPermCity( String permCity )
+  public void setPermCity(String permCity)
   {
-    this.permCity =
-        ( !ContentTests.isEmpty( permCity ) ? StringCleaner.removeControlChars( permCity ):
-          "" );
+    this.permCity = (!ContentTests.isEmpty(permCity)? StringCleaner.removeControlChars(permCity): "");
   }
 
   public String getPermCity()
@@ -201,11 +183,9 @@ public class PatronBean
     return permCity;
   }
 
-  public void setPermState( String permState )
+  public void setPermState(String permState)
   {
-    this.permState =
-        ( !ContentTests.isEmpty( permState ) ? StringCleaner.removeControlChars( permState ):
-          "" );
+    this.permState = (!ContentTests.isEmpty(permState)? StringCleaner.removeControlChars(permState): "");
   }
 
   public String getPermState()
@@ -213,11 +193,9 @@ public class PatronBean
     return permState;
   }
 
-  public void setPermZip( String permZip )
+  public void setPermZip(String permZip)
   {
-    this.permZip =
-        ( !ContentTests.isEmpty( permZip ) ? StringCleaner.removeControlChars( permZip ):
-          "" );
+    this.permZip = (!ContentTests.isEmpty(permZip)? StringCleaner.removeControlChars(permZip): "");
   }
 
   public String getPermZip()
@@ -225,11 +203,9 @@ public class PatronBean
     return permZip;
   }
 
-  public void setPermCountry( String permCountry )
+  public void setPermCountry(String permCountry)
   {
-    this.permCountry =
-        ( !ContentTests.isEmpty( permCountry ) ? StringCleaner.removeControlChars( permCountry ):
-          "" );
+    this.permCountry = (!ContentTests.isEmpty(permCountry)? StringCleaner.removeControlChars(permCountry): "");
   }
 
   public String getPermCountry()
@@ -237,11 +213,9 @@ public class PatronBean
     return permCountry;
   }
 
-  public void setLocalAddress1( String localAddress1 )
+  public void setLocalAddress1(String localAddress1)
   {
-    this.localAddress1 =
-        ( !ContentTests.isEmpty( localAddress1 ) ? StringCleaner.removeControlChars( localAddress1 ):
-          "" );
+    this.localAddress1 = (!ContentTests.isEmpty(localAddress1)? StringCleaner.removeControlChars(localAddress1): "");
   }
 
   public String getLocalAddress1()
@@ -249,11 +223,9 @@ public class PatronBean
     return localAddress1;
   }
 
-  public void setLocalAddress2( String localAddress2 )
+  public void setLocalAddress2(String localAddress2)
   {
-    this.localAddress2 =
-        ( !ContentTests.isEmpty( localAddress2 ) ? StringCleaner.removeControlChars( localAddress2 ):
-          "" );
+    this.localAddress2 = (!ContentTests.isEmpty(localAddress2)? StringCleaner.removeControlChars(localAddress2): "");
   }
 
   public String getLocalAddress2()
@@ -261,11 +233,9 @@ public class PatronBean
     return localAddress2;
   }
 
-  public void setLocalAddress3( String localAddress3 )
+  public void setLocalAddress3(String localAddress3)
   {
-    this.localAddress3 =
-        ( !ContentTests.isEmpty( localAddress3 ) ? StringCleaner.removeControlChars( localAddress3 ):
-          "" );
+    this.localAddress3 = (!ContentTests.isEmpty(localAddress3)? StringCleaner.removeControlChars(localAddress3): "");
   }
 
   public String getLocalAddress3()
@@ -273,11 +243,9 @@ public class PatronBean
     return localAddress3;
   }
 
-  public void setLocalAddress4( String localAddress4 )
+  public void setLocalAddress4(String localAddress4)
   {
-    this.localAddress4 =
-        ( !ContentTests.isEmpty( localAddress4 ) ? StringCleaner.removeControlChars( localAddress4 ):
-          "" );
+    this.localAddress4 = (!ContentTests.isEmpty(localAddress4)? StringCleaner.removeControlChars(localAddress4): "");
   }
 
   public String getLocalAddress4()
@@ -285,11 +253,9 @@ public class PatronBean
     return localAddress4;
   }
 
-  public void setLocalAddress5( String localAddress5 )
+  public void setLocalAddress5(String localAddress5)
   {
-    this.localAddress5 =
-        ( !ContentTests.isEmpty( localAddress5 ) ? StringCleaner.removeControlChars( localAddress5 ):
-          "" );
+    this.localAddress5 = (!ContentTests.isEmpty(localAddress5)? StringCleaner.removeControlChars(localAddress5): "");
   }
 
   public String getLocalAddress5()
@@ -297,11 +263,9 @@ public class PatronBean
     return localAddress5;
   }
 
-  public void setLocalCity( String localCity )
+  public void setLocalCity(String localCity)
   {
-    this.localCity =
-        ( !ContentTests.isEmpty( localCity ) ? StringCleaner.removeControlChars( localCity ):
-          "" );
+    this.localCity = (!ContentTests.isEmpty(localCity)? StringCleaner.removeControlChars(localCity): "");
   }
 
   public String getLocalCity()
@@ -309,11 +273,9 @@ public class PatronBean
     return localCity;
   }
 
-  public void setLocalState( String localState )
+  public void setLocalState(String localState)
   {
-    this.localState =
-        ( !ContentTests.isEmpty( localState ) ? StringCleaner.removeControlChars( localState ):
-          "" );
+    this.localState = (!ContentTests.isEmpty(localState)? StringCleaner.removeControlChars(localState): "");
   }
 
   public String getLocalState()
@@ -321,11 +283,9 @@ public class PatronBean
     return localState;
   }
 
-  public void setLocalZip( String localZip )
+  public void setLocalZip(String localZip)
   {
-    this.localZip =
-        ( !ContentTests.isEmpty( localZip ) ? StringCleaner.removeControlChars( localZip ):
-          "" );
+    this.localZip = (!ContentTests.isEmpty(localZip)? StringCleaner.removeControlChars(localZip): "");
   }
 
   public String getLocalZip()
@@ -333,11 +293,9 @@ public class PatronBean
     return localZip;
   }
 
-  public void setLocalCountry( String localCountry )
+  public void setLocalCountry(String localCountry)
   {
-    this.localCountry =
-        ( !ContentTests.isEmpty( localCountry ) ? StringCleaner.removeControlChars( localCountry ):
-          "" );
+    this.localCountry = (!ContentTests.isEmpty(localCountry)? StringCleaner.removeControlChars(localCountry): "");
   }
 
   public String getLocalCountry()
@@ -345,21 +303,19 @@ public class PatronBean
     return localCountry;
   }
 
-  public void setIsUC( boolean isUC )
+  public void setIsUC(String isUC)
   {
     this.isUC = isUC;
   }
 
-  public boolean isIsUC()
+  public String isIsUC()
   {
     return isUC;
   }
 
-  public void setEmail( String email )
+  public void setEmail(String email)
   {
-    this.email =
-        ( !ContentTests.isEmpty( email ) ? StringCleaner.removeControlChars( email ):
-          "" );
+    this.email = (!ContentTests.isEmpty(email)? StringCleaner.removeControlChars(email): "");
   }
 
   public String getEmail()
@@ -367,11 +323,9 @@ public class PatronBean
     return email;
   }
 
-  public void setInstitutionID( String institutionID )
+  public void setInstitutionID(String institutionID)
   {
-    this.institutionID =
-        ( !ContentTests.isEmpty( institutionID ) ? StringCleaner.removeControlChars( institutionID ):
-          "" );
+    this.institutionID = (!ContentTests.isEmpty(institutionID)? StringCleaner.removeControlChars(institutionID): "");
   }
 
   public String getInstitutionID()
@@ -379,7 +333,7 @@ public class PatronBean
     return institutionID;
   }
 
-  public void setTempEffectdate( Date tempEffectdate )
+  public void setTempEffectdate(Date tempEffectdate)
   {
     this.tempEffectdate = tempEffectdate;
   }
@@ -389,7 +343,7 @@ public class PatronBean
     return tempEffectdate;
   }
 
-  public void setTempExpireDate( Date tempExpireDate )
+  public void setTempExpireDate(Date tempExpireDate)
   {
     this.tempExpireDate = tempExpireDate;
   }
@@ -399,7 +353,7 @@ public class PatronBean
     return tempExpireDate;
   }
 
-  public void setPhoneNumber( String phoneNumber )
+  public void setPhoneNumber(String phoneNumber)
   {
     this.phoneNumber = phoneNumber;
   }

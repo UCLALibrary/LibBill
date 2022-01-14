@@ -26,7 +26,7 @@ public class PatronMapper
     bean.setEmail( rs.getString( "email" ) );
     bean.setFirstName( rs.getString( "normal_first_name" ) );
     bean.setInstitutionID( rs.getString( "institution_id" ) );
-    bean.setIsUC( rs.getBoolean( "uc_community" ) );
+    bean.setIsUC( rs.getString( "uc_community" ) );
     bean.setLastName( rs.getString( "normal_last_name" ) );
     bean.setLocalAddress1( rs.getString( "temp_address1" ) );
     bean.setLocalAddress2( rs.getString( "temp_address2" ) );

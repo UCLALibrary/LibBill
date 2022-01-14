@@ -83,7 +83,7 @@ public class AddLineItemProcedure
     declareParameter( new SqlParameter( "p_quantity", Types.NUMERIC ) );
     if ( data.getUnitPrice() != 0D )
       declareParameter( new SqlParameter( "p_unit_price", Types.NUMERIC ) );
-    declareParameter( new SqlParameter( "p_is_uc_member", Types.CHAR ) );
+    declareParameter( new SqlParameter( "p_is_uc_member", Types.VARCHAR ) );
     compile();
   }
 

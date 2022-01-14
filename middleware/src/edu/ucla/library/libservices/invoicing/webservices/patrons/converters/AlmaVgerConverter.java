@@ -42,14 +42,14 @@ public class AlmaVgerConverter
     return theVger;
   }
 
-  private static boolean determineCommunity(final String userGroup)
+  private static String determineCommunity(final String userGroup)
   {
-    boolean isUC = false;
+    String isUC = "N";
     for (UcCommunityTypes theType: UcCommunityTypes.values())
     {
       if (theType.toString().equals(userGroup))
       {
-        isUC = true;
+        isUC = "Y";
       }
     }
     return isUC;
@@ -233,8 +233,8 @@ public class AlmaVgerConverter
     for (UserIdentifier theID: identifiers)
     {
       if (theID.getType() != null && theID.getType()
-                                                     .getValue()
-                                                     .equalsIgnoreCase("barcode"))
+                                          .getValue()
+                                          .equalsIgnoreCase("barcode"))
       {
         barcodes.add(theID);
       }

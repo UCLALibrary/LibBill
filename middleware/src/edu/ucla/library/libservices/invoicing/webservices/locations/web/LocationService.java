@@ -61,7 +61,7 @@ public class LocationService
   @Path( "branch_services/{ln}/for_uc/{uc}" )
   public LocationServiceGenerator filteredByBranch( @PathParam( "ln" )
     String locationName, @PathParam( "uc" )
-    boolean forUC )
+    String forUC )
   {
     LocationServiceGenerator docMaker;
 
@@ -69,7 +69,7 @@ public class LocationService
 
     docMaker.setBranchCode( locationName );
     docMaker.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
-    docMaker.setForUC( forUC );
+    docMaker.setForUC( forUC.equalsIgnoreCase("Y") );
     docMaker.setItemCode( null );
     docMaker.getFilteredServicesByLocation();
 
@@ -81,7 +81,7 @@ public class LocationService
   @Path( "branch_services/{ln}/for_uc/{uc}/code/{ic}" )
   public LocationServiceGenerator filteredByBranchAndCode( @PathParam( "ln" )
     String locationName, @PathParam( "uc" )
-    boolean forUC, @PathParam( "ic" )
+    String forUC, @PathParam( "ic" )
     String itemCode )
   {
     LocationServiceGenerator docMaker;
@@ -90,7 +90,7 @@ public class LocationService
 
     docMaker.setBranchCode( locationName );
     docMaker.setDbName( config.getServletContext().getInitParameter( "datasource.invoice" ) );
-    docMaker.setForUC( forUC );
+    docMaker.setForUC( forUC.equalsIgnoreCase("Y") );
     docMaker.setItemCode( itemCode );
     docMaker.getFilteredServicesByLocation();
 

@@ -51,8 +51,8 @@ public class UpdateLineItemProcedure
 
   private void makeConnection()
   {
-    ds = DataSourceFactory.createDataSource( getDbName() );
-    //ds = DataSourceFactory.createBillSource();
+    //ds = DataSourceFactory.createDataSource( getDbName() );
+    ds = DataSourceFactory.createBillSource();
   }
 
   public void updateLineItem()
