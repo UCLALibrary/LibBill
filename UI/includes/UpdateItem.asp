@@ -84,8 +84,6 @@ else
   strInput=strInput & "<createdBy>" & strBillerID & "</createdBy>"
   strInput=strInput & "</lineItem>"
 
-'response.write "strInput: " &strInput
-
   hashURL=session("strBaseHash")
   hashURL=hashURL & "invoices/edit_line_item" 
   strCryptoKey=session("CryptoKey")

@@ -60,14 +60,7 @@ if not session("userName")="" then 'USER IS LOGGED IN...
   strInvoiceAmount1=request("txtInvoiceAmount1")
   strInvoiceAmount2=request("txtInvoiceAmount2")
 
-  strUCMember=request("txtUCMember")
-  ' Patron service returns this as "true" or "false"
-  ' Convert to "Y"/"N" expected by line item services.
-  if strUCMember = "true" then
-    strUCMember = "Y"
-  else
-    strUCMember = "N"
-  end if
+  strUCMember = session("UCMember")
 
   select case strAction
     case "MailPDF"
@@ -262,9 +255,6 @@ if not session("userName")="" then 'USER IS LOGGED IN...
     end if
   end if
     set xmlDoc=nothing
-
-
-
 
 
 else 'USER IS NOT LOGGED IN, SO...

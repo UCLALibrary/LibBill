@@ -113,7 +113,6 @@ else
 
     Set varUCMember = curitem.selectSingleNode("ucMember")
     strUCMember = varUCMember.Text
-
     Set varPatronID = curitem.selectSingleNode("patronID")
     strPatronID = varPatronID.Text
 
@@ -204,8 +203,7 @@ else
           %>
           <!-- #INCLUDE virtual="/includes/AddLineItemForm.asp" --> 
           <%
-          if strUCMember="true" then
-            'response.write "true"
+          if strUCMember="Y" then
             loadXMLFile xmldoc, server.MapPath("xsl/LineItemsWithUpdateUC.xsl")
           else
             loadXMLFile xmldoc, server.MapPath("xsl/LineItemsWithUpdate.xsl")
