@@ -23,7 +23,9 @@ xmlhttp.Open "GET", postUrl, false
 xmlhttp.setRequestHeader "Content-Type","application/xml"
 xmlhttp.setRequestHeader "Authorization", strSig
 xmlhttp.send 
-'Response.write "<p>" & xmlhttp.responsetext
+'Response.write "<pre>" & xmlhttp.responsetext & "</pre>"
+'Response.write "<p>" & xmlhttp.status & "</p>"
+
 if (xmlhttp.status >= 200) and (xmlhttp.status < 300) then
   'response.write "<p>Got user info:</p>"
 else
@@ -34,7 +36,6 @@ else
     response.write "<p>Status: " & strError & "</p>"
   end if
 end if
-
 
 set xmlDoc = createObject("MSXML2.DOMDocument")
 xmlDoc.async = False
@@ -110,9 +111,16 @@ else
     Set currNode = oNodeList.nextNode
     Set curitem = oNodeList.Item(i)
 
-
+    'Patrons which aren't found have minimal info, and don't have ucMember
+    on error resume next
     Set varUCMember = curitem.selectSingleNode("ucMember")
     strUCMember = varUCMember.Text
+    if Err.Number <> 0 then
+      strUCMember = "UNKNOWN"
+    end if
+    'Turn error handling on again
+    on error goto 0
+
     Set varPatronID = curitem.selectSingleNode("patronID")
     strPatronID = varPatronID.Text
 
@@ -171,7 +179,6 @@ else
     <a href="View_PDF.asp?Num=<%=strInvoiceNum%>" target="_blank">View PDF</a> 
 
 
-
 <form method="post" action="GetInvoice.asp?Search=InvoiceNum&Action=MailPDF&Num=<%=strInvoiceNum%>">
 
 <input align="right" type="hidden" name="txtInvoiceNum" value="<%=strInvoiceNum%>" />
@@ -206,6 +213,7 @@ else
           if strUCMember="Y" then
             loadXMLFile xmldoc, server.MapPath("xsl/LineItemsWithUpdateUC.xsl")
           else
+            'Applies to explicit "N" as well as "UNKNOWN" set when patron is not found.
             loadXMLFile xmldoc, server.MapPath("xsl/LineItemsWithUpdate.xsl")
           end if
         else
