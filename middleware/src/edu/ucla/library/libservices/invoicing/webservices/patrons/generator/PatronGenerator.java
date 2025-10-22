@@ -237,7 +237,7 @@ public class PatronGenerator
     basicPatron = new SimplePatron();
     makeBillConnection();
     basicPatron.setInvoices(new JdbcTemplate(ds)
-                            .query(UNPAID_INVOICE_IDS, new Object[] { getInstitutionID() }, new SimpleHeaderMapper()));
+                            .query(UNPAID_INVOICE_IDS, new Object[] { getInstitutionID().toLowerCase() }, new SimpleHeaderMapper()));
     return basicPatron;
 
     /*if ( new JdbcTemplate( ds ).queryForInt( PATRON_COUNT, new Object[]
